@@ -1,6 +1,6 @@
 # API local de CINE-TICS
 
-Base: `http://127.0.0.1:8080`. Este corte devuelve JSON; la interfaz gráfica React se construirá después. Todo pago y saldo es ficticio.
+Base: `http://127.0.0.1:8080`. Los endpoints devuelven JSON; la interfaz React está en `/web/index.html`. Todo pago y saldo es ficticio.
 
 ## Preparar y arrancar
 
@@ -11,7 +11,7 @@ python3 infra/oracle/manage.py migrate
 python3 infra/oracle/web.py serve
 ```
 
-El comando lee las credenciales locales ignoradas por Git, construye el JAR web e inicia el servidor en primer plano. Ctrl+C lo detiene sin detener Oracle. Para otro puerto: `CINE_WEB_PORT=8081 python3 infra/oracle/web.py serve`. El límite local es de cuatro conexiones por cadena; no cambia la configuración de los demás contenedores.
+El comando instala y compila React (requiere Node), lee las credenciales locales ignoradas por Git y construye el JAR web e inicia el servidor en primer plano. Ctrl+C lo detiene sin detener Oracle. Para otro puerto: `CINE_WEB_PORT=8081 python3 infra/oracle/web.py serve`. El límite local es de cuatro conexiones por cadena; no cambia la configuración de los demás contenedores.
 
 Consultar en el navegador:
 
@@ -112,4 +112,4 @@ python3 infra/oracle/manage.py test
 
 Ejecuta pruebas existentes y pruebas HTTP/Oracle con servidor temporal y usuarios ficticios que se limpian. Una interrupción puede dejar fixtures; no ejecutar borrados generales. Las pruebas habituales `Cine/mvnw -f Cine/pom.xml clean verify` no necesitan Oracle.
 
-Sesiones en memoria; se pierden al reiniciar. La API local no incluye recuperación de contraseña, comprobantes exportados, frontend ni despliegue público. Ver [decisiones y límites de seguridad](../architecture/ADR-004-API-IDENTIDAD.md).
+Sesiones en memoria; se pierden al reiniciar. La API local no incluye recuperación de contraseña, comprobantes exportados ni despliegue público. Ver [decisiones y límites de seguridad](../architecture/ADR-004-API-IDENTIDAD.md).

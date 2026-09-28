@@ -34,7 +34,7 @@ Aceptación: Capacidades 120/150/200,100/160/175,80/100/150,90/125/140.
 
 Página: 2 · Estado: **Parcial** · Prioridad: P1 · Hito: H4
 
-Evidencia: API RegistroCliente validado; V005; WebOracleIT; frontend pendiente.
+Evidencia: API RegistroCliente validado; V005; WebOracleIT y registro React.
 
 Aceptación: Validar nombre, apellidos, dirección, celular y correo; persistir.
 
@@ -50,7 +50,7 @@ Aceptación: Rechazar longitud menor; almacenar hash en versión nueva.
 
 Página: 2 · Estado: **Parcial** · Prioridad: P1 · Hito: H4
 
-Evidencia: API pública de funciones y compra con sesión verificada; frontend pendiente.
+Evidencia: API pública de funciones y compra con sesión verificada; recorrido React comprobado.
 
 Aceptación: Visitante consulta; compra exige identidad autenticada.
 

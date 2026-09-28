@@ -140,6 +140,9 @@ def verify():
 
 
 def test():
+    # The HTTP suite verifies the packaged React entrypoint as well as the API.
+    for command in (['npm', 'ci'], ['npm', 'test'], ['npm', 'run', 'build']):
+        subprocess.run(command, cwd=ROOT/'frontend', check=True)
     env = os.environ.copy()
     for tenant in TENANTS:
         env[f'{tenant}_APP_PASSWORD'] = credentials()[f'{tenant}_APP_PASSWORD']

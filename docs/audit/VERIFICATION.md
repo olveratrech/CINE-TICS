@@ -34,3 +34,7 @@ La línea base anterior describe H0/H1. El estado posterior está en [H3-ORACLE.
 ## Actualización H4 — API e identidad
 
 71 pruebas aprobadas, incluidas siete pruebas HTTP con servidor real y ambas PDB. V005 aplicada y validada. Se conserva el arranque histórico. Detalles en [H4-API.md](H4-API.md).
+
+## Actualización H4 — React
+
+72 pruebas Java y seis React aprobadas; build TypeScript/Vite y recorrido de compra en navegador real. Interfaz integrada en Spring Boot. Evidencia y límites: [H4-REACT.md](H4-REACT.md).

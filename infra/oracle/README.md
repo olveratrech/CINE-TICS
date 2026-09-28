@@ -113,7 +113,7 @@ Las reservas duran como máximo diez minutos y nunca superan el inicio de la fun
 
 Reservar no genera un cargo. El comando `pay-hold` confirma el pago y emite boletos como se describe abajo. La compra de productos `buy` sigue siendo independiente.
 
-`manage.py test` ejecuta actualmente 71 pruebas: 36 sin Oracle y 35 de integración (incluidas siete HTTP con servidor real). Véase [decisiones y límites de reservas](../../docs/architecture/ADR-002-RESERVAS.md).
+`manage.py test` ejecuta actualmente 72 pruebas Java: 36 sin Oracle y 36 de integración (incluidas ocho HTTP con servidor real), además de seis pruebas React. Véase [decisiones y límites de reservas](../../docs/architecture/ADR-002-RESERVAS.md).
 
 
 ## Pagar una reserva y consultar boletos

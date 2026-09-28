@@ -30,7 +30,7 @@ public class SeguridadWeb {
     @Bean SecurityFilterChain security(HttpSecurity http,UserDetailsService users,
             @org.springframework.beans.factory.annotation.Value("${cine.auth.max-attempts:30}") int maximo) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-            .requestMatchers(HttpMethod.GET,"/","/api/auth/csrf","/api/public/*/shows","/api/public/*/shows/*/seats").permitAll()
+            .requestMatchers(HttpMethod.GET,"/","/web/**","/api/auth/csrf","/api/public/*/shows","/api/public/*/shows/*/seats").permitAll()
             .requestMatchers(HttpMethod.POST,"/api/auth/login","/api/public/*/register").permitAll()
             .requestMatchers("/api/client/**").hasRole("CLIENTE")
             .requestMatchers("/api/staff/**").hasAnyRole("EMPLEADO","ADMIN")

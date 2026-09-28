@@ -21,7 +21,9 @@ def main():
         env[f'{tenant}_APP_PASSWORD'] = manage.credentials()[f'{tenant}_APP_PASSWORD']
     maven = [str(manage.ROOT/'Cine/mvnw'), '-B', '-ntp', '-f', str(manage.ROOT/'Cine/pom.xml')]
     if args.action == 'serve':
-        subprocess.run(maven + ['package', '-DskipTests'], env=env, check=True)
+        subprocess.run(['npm', 'ci'], cwd=manage.ROOT/'frontend', check=True)
+        subprocess.run(['npm', 'run', 'build'], cwd=manage.ROOT/'frontend', check=True)
+        subprocess.run(maven + ['clean', 'package', '-DskipTests'], env=env, check=True)
         java = str(Path(env['JAVA_HOME'])/'bin/java') if env.get('JAVA_HOME') else 'java'
         os.execvpe(java, [java, '-jar', str(manage.ROOT/'Cine/target/Cine-1.0-SNAPSHOT-web.jar')], env)
     else:

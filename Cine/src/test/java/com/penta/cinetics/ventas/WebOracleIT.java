@@ -165,4 +165,13 @@ class WebOracleIT {
     static long wallets() throws SQLException {
         try(var c=ComprasOracleIT.open("CINE_TICS");var s=c.createStatement();var r=s.executeQuery("select count(*) from CINE_OWNER.demo_wallets")) {r.next();return r.getLong(1);}
     }
+    @Test void frontendIsPublicButDoesNotExposePrivateRoutes() throws Exception {
+        var browser=new Browser();
+        var page=browser.get("/web/index.html");
+        assertEquals(200,page.statusCode());assertTrue(page.body().contains("id=\"root\""));
+        assertTrue(page.headers().firstValue("content-type").orElse("").contains("text/html"));
+        assertEquals(401,browser.get("/api/client/tickets").statusCode());
+        assertEquals(403,browser.send("POST","/web/index.html","{}","application/json",false).statusCode());
+    }
+
 }

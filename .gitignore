@@ -30,3 +30,5 @@ coverage/
 /infra/oracle/data/
 **/__pycache__/
 *.pyc
+
+/frontend/dist/
