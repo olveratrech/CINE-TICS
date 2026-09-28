@@ -1,0 +1,20 @@
+name: cine-tics
+services:
+  oracle:
+    image: container-registry.oracle.com/database/free:23.26.3.0-lite-arm64
+    platform: linux/arm64
+    ports:
+      - "127.0.0.1:1522:1521"
+    environment:
+      ORACLE_PWD: ${ORACLE_ADMIN_PASSWORD:?Run python3 infra/oracle/manage.py secrets}
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+    shm_size: 1g
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/oracle/checkDBStatus.sh"]
+      interval: 15s
+      timeout: 10s
+      start_period: 120s
+      retries: 40
+volumes:
+  oracle-data:

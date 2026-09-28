@@ -2,7 +2,7 @@
 
 Modernización de un proyecto académico de programación orientada a objetos: de consola y archivos locales a una aplicación web de gestión de cines con Oracle Multitenant.
 
-**Estado:** base histórica preservada; primera refactorización de carrito y autorización de compra implementada. La web, Oracle y las integraciones todavía no están implementadas. La consola conserva defectos conocidos: no usarla para operaciones reales.
+**Estado:** base histórica preservada; primera refactorización de carrito y autorización de compra implementada. Oracle local ya dispone de dos PDB y catálogo inicial; la consola aún usa archivos. La web y la integración comercial con Oracle siguen pendientes. La consola conserva defectos conocidos: no usarla para operaciones reales.
 
 ## Empezar
 
@@ -39,6 +39,8 @@ La prueba de arranque funciona sin datos históricos. Las funciones completas de
 
 ## Guía del proyecto
 
+- [Oracle local: arranque y conexiones](infra/oracle/README.md).
+- [Verificación de Oracle e integración pendiente](docs/audit/H3-ORACLE.md).
 - [Roadmap y criterios de salida](docs/ROADMAP.md).
 - [Matriz de requisitos](docs/requirements/MATRIX.md) y [CSV editable](docs/requirements/matrix.csv).
 - [Decisiones de producto](docs/requirements/DECISIONS.md).
@@ -63,7 +65,7 @@ scripts/                Verificación e inventario
 .local-backups/         Respaldo privado, excluido de Git
 ```
 
-Los directorios futuros `backend`, `frontend` e `infra` se crearán al implementar sus componentes. No son funcionalidades disponibles todavía.
+`infra/oracle` contiene Compose, migraciones y verificación. Los directorios futuros `backend` y `frontend` se crearán al implementar sus componentes. No son funcionalidades disponibles todavía.
 
 ## Verificación y límites
 

@@ -28,3 +28,5 @@ coverage/
 /Cine/registroSucursales/
 /data/local/
 /infra/oracle/data/
+**/__pycache__/
+*.pyc

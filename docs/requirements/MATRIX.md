@@ -10,7 +10,7 @@ Total: 60 grupos de requisitos.
 
 Página: 1 · Estado: **Parcial** · Prioridad: P1 · Hito: H3
 
-Evidencia: CineTICS/Sucursal; datos locales.
+Evidencia: CineTICS/Sucursal; datos locales; seed Oracle con cuatro sucursales.
 
 Aceptación: Seed con cuatro sucursales y IDs únicos.
 
@@ -432,9 +432,9 @@ Aceptación: Release ZIP con documentación, manuales, diagramas y demo sin dato
 
 ## N01 — Oracle Multitenant en Docker
 
-Página: Usuario · Estado: **Pendiente** · Prioridad: P0 · Hito: H3
+Página: Usuario · Estado: **Parcial** · Prioridad: P0 · Hito: H3
 
-Evidencia: ADR-001.
+Evidencia: Oracle Docker ARM64, dos PDB, Flyway V001, aislamiento y reinicio verificados; falta integración y restauración.
 
 Aceptación: Dos cadenas aisladas, migraciones, volumen, reinicio y restauración.
 
@@ -480,8 +480,8 @@ Aceptación: Pedido con origen, función y estado; validación de horario y entr
 
 ## R56 — Software escalable para licenciar a otras cadenas como SaaS
 
-Página: 1 · Estado: **Pendiente** · Prioridad: P1 · Hito: H3
+Página: 1 · Estado: **Parcial** · Prioridad: P1 · Hito: H3
 
-Evidencia: Sin modelo tenant; ADR-001.
+Evidencia: Dos PDB aisladas verificadas; falta identidad y autorización SaaS.
 
 Aceptación: Dos cadenas configurables, aislamiento y alta reproducible; límites operativos documentados.

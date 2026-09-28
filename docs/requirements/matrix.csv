@@ -1,5 +1,5 @@
 id,pagina,requisito,estado,evidencia,aceptacion,hito,prioridad
-R01,1,"Cuatro sucursales CU, Universidad, Delta, Xochimilco",Parcial,CineTICS/Sucursal; datos locales,Seed con cuatro sucursales y IDs únicos,H3,P1
+R01,1,"Cuatro sucursales CU, Universidad, Delta, Xochimilco",Parcial,CineTICS/Sucursal; datos locales; seed Oracle con cuatro sucursales,Seed con cuatro sucursales y IDs únicos,H3,P1
 R02,1,Cinco funciones por sucursal y horarios del cuadro,Parcial,Funciones/Funcion; archivos Funciones,"20 funciones con fecha, sala y horario; detectar solapamientos",H3,P1
 R03,2,Capacidades de las 12 salas del cuadro,Parcial,CineTICS/Sala; registroSucursales,"Capacidades 120/150/200,100/160/175,80/100/150,90/125/140",H3,P1
 R04,2,Registro de cliente y campos personales obligatorios,Parcial,Clientes/Cliente; Datos/RegistroClientes,"Validar nombre, apellidos, dirección, celular y correo; persistir",H4,P1
@@ -52,10 +52,10 @@ R50,6,Manuales cliente y administrador,Pendiente,Sin manuales en copia de códig
 R51,6,Video técnico hasta veinte minutos y recursos,Histórico,Entregable externo al código; no inspeccionado,Guion y demo; grabación/publicación coordinadas con propietario,H8,P2
 R52,7,Presentación de empresa y exposición hasta doce minutos,Histórico,Entregable académico externo,Material de portafolio adaptado; no asumir entrega escolar vigente,H8,P2
 R53,6–7,"Paquete de entregables organizado, fuente y datos de prueba",Adaptado,Estructura documental nueva,"Release ZIP con documentación, manuales, diagramas y demo sin datos privados",H8,P2
-N01,Usuario,Oracle Multitenant en Docker,Pendiente,ADR-001,"Dos cadenas aisladas, migraciones, volumen, reinicio y restauración",H3,P0
+N01,Usuario,Oracle Multitenant en Docker,Parcial,"Oracle Docker ARM64, dos PDB, Flyway V001, aislamiento y reinicio verificados; falta integración y restauración","Dos cadenas aisladas, migraciones, volumen, reinicio y restauración",H3,P0
 N02,Usuario,Interfaz web,Pendiente,ADR-001,Cliente y personal usan flujos sin consola; accesibilidad básica,H4,P1
 N03,Usuario,Refactorización y patrones justificados,En curso,Dominio de carrito y caso de uso CompraSimulada integrados a consola; H2 parcial,Reglas separadas de UI/persistencia y dependencias entre módulos controladas,H2,P1
 N04,Usuario,Eliminar elementos innecesarios sin perder capacidades,En curso,Inventario; respaldo,Eliminar solo tras mapa de uso y reemplazo probado,H2,P1
 R54,1,Rob asesora a empleados en entrega y gerentes en estadísticas,Pendiente,Rob vacío,Consultar pedidos y estadísticas reales según rol; no exponer datos de otra cadena,H7,P1
 R55,1,Alimentos antes y durante la función; Rob comunica pedidos a S.I.G.A.,Pendiente,ProcesamientoPedidos vacío,"Pedido con origen, función y estado; validación de horario y entrega antes/durante función",H6,P1
-R56,1,Software escalable para licenciar a otras cadenas como SaaS,Pendiente,Sin modelo tenant; ADR-001,"Dos cadenas configurables, aislamiento y alta reproducible; límites operativos documentados",H3,P1
+R56,1,Software escalable para licenciar a otras cadenas como SaaS,Parcial,Dos PDB aisladas verificadas; falta identidad y autorización SaaS,"Dos cadenas configurables, aislamiento y alta reproducible; límites operativos documentados",H3,P1

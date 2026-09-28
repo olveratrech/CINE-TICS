@@ -1,0 +1,20 @@
+CREATE TABLE branches (
+    id NUMBER(19) PRIMARY KEY,
+    code VARCHAR2(40 CHAR) NOT NULL UNIQUE,
+    name VARCHAR2(120 CHAR) NOT NULL
+);
+CREATE TABLE products (
+    id NUMBER(19) PRIMARY KEY,
+    code VARCHAR2(40 CHAR) NOT NULL UNIQUE,
+    name VARCHAR2(120 CHAR) NOT NULL,
+    price NUMBER(12,2) NOT NULL CHECK (price >= 0)
+);
+CREATE TABLE inventory (
+    branch_id NUMBER(19) NOT NULL REFERENCES branches(id),
+    product_id NUMBER(19) NOT NULL REFERENCES products(id),
+    quantity NUMBER(10) NOT NULL CHECK (quantity >= 0),
+    PRIMARY KEY (branch_id, product_id)
+);
+GRANT SELECT, INSERT, UPDATE, DELETE ON branches TO CINE_APP;
+GRANT SELECT, INSERT, UPDATE, DELETE ON products TO CINE_APP;
+GRANT SELECT, INSERT, UPDATE, DELETE ON inventory TO CINE_APP;
