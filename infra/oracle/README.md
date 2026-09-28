@@ -1,6 +1,6 @@
 # Oracle local — primer corte de persistencia
 
-Esta infraestructura no sustituye todavía los archivos usados por la consola. Crea una CDB Oracle Free y dos PDB de aplicación, usuarios y catálogo inicial. No importar datos personales ni tarjetas en este corte.
+Esta infraestructura no sustituye todavía los archivos usados por la consola. Crea una CDB Oracle Free y dos PDB de aplicación, usuarios, catálogo y compras de demostración. No importar datos personales ni tarjetas en este corte.
 
 ## Requisitos
 
@@ -65,7 +65,26 @@ Los datos viven en el volumen nombrado del proyecto Compose. Un volumen persiste
 
 `V001__catalog.sql`: sucursales, productos y existencias por sucursal, claves únicas, referencias y restricciones de importes/stock no negativos. La aplicación puede consultar/modificar estos datos pero no crear tablas. Flyway conserva historial y checksums en cada esquema.
 
-Siguiente migración: identidad de cliente, compra con clave idempotente, líneas, pago simulado y estados; después función/asiento/reserva. El adaptador JDBC implementará una transacción para confirmar compra y descontar stock antes de conectar la consola.
+`V002__transactional_purchases.sql`: monederos ficticios, pedidos con clave idempotente por cliente, líneas con precio histórico y pagos simulados. El adaptador JDBC confirma pedido, pago, saldo e inventario en una transacción. Los rechazos se conservan sin descontar saldo o existencias; repetir una clave rechazada recupera ese rechazo.
+
+## Demostración y pruebas
+
+Desde la raíz, con JDK 25 activo y ambas migraciones aplicadas:
+
+```sh
+python3 infra/oracle/manage.py demo_seed
+python3 infra/oracle/console.py catalog
+python3 infra/oracle/console.py buy mi-compra-001 9001 2
+python3 infra/oracle/console.py buy mi-compra-001 9001 2
+python3 infra/oracle/console.py history
+python3 infra/oracle/manage.py test
+```
+
+En una instalación nueva, el seed crea el monedero DEMO con 1000 MXN y diez unidades del producto 9001 a 65 MXN. No repone saldo ni stock al reejecutarse. La primera compra descuenta 130 MXN y dos unidades; la segunda devuelve el mismo pedido. Otra compra requiere otra clave. Reutilizar una clave con contenido distinto produce un error.
+
+Las ocho pruebas Oracle generan clientes/productos/sucursales ficticios exclusivos y los eliminan al finalizar. El perfil `oracle-it` ejecuta además las 30 pruebas existentes/unitarias. Una interrupción del proceso puede dejar fixtures con prefijo IT_; revisar sus identificadores antes de retirarlos. La ejecución habitual `./mvnw verify` no requiere Oracle.
+
+La consola demo fija cliente DEMO y sucursal CU; no implementa autenticación ni factura fiscal. Usa conexiones JDBC por operación. El backend web incorporará pools limitados por cadena y autorización antes de admitir usuarios concurrentes externos. Reservas de asientos, importación del legado, lealtad y facturación continúan pendientes.
 
 ## Referencias
 

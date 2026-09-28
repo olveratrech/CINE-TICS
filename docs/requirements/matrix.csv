@@ -52,7 +52,7 @@ R50,6,Manuales cliente y administrador,Pendiente,Sin manuales en copia de códig
 R51,6,Video técnico hasta veinte minutos y recursos,Histórico,Entregable externo al código; no inspeccionado,Guion y demo; grabación/publicación coordinadas con propietario,H8,P2
 R52,7,Presentación de empresa y exposición hasta doce minutos,Histórico,Entregable académico externo,Material de portafolio adaptado; no asumir entrega escolar vigente,H8,P2
 R53,6–7,"Paquete de entregables organizado, fuente y datos de prueba",Adaptado,Estructura documental nueva,"Release ZIP con documentación, manuales, diagramas y demo sin datos privados",H8,P2
-N01,Usuario,Oracle Multitenant en Docker,Parcial,"Oracle Docker ARM64, dos PDB, Flyway V001, aislamiento y reinicio verificados; falta integración y restauración","Dos cadenas aisladas, migraciones, volumen, reinicio y restauración",H3,P0
+N01,Usuario,Oracle Multitenant en Docker,Parcial,"Oracle Docker ARM64, dos PDB, Flyway V001/V002, compras JDBC y concurrencia verificadas; falta integración completa y restauración","Dos cadenas aisladas, migraciones, volumen, reinicio y restauración",H3,P0
 N02,Usuario,Interfaz web,Pendiente,ADR-001,Cliente y personal usan flujos sin consola; accesibilidad básica,H4,P1
 N03,Usuario,Refactorización y patrones justificados,En curso,Dominio de carrito y caso de uso CompraSimulada integrados a consola; H2 parcial,Reglas separadas de UI/persistencia y dependencias entre módulos controladas,H2,P1
 N04,Usuario,Eliminar elementos innecesarios sin perder capacidades,En curso,Inventario; respaldo,Eliminar solo tras mapa de uso y reemplazo probado,H2,P1

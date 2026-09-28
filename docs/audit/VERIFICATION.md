@@ -18,3 +18,7 @@ La compilación de la copia temporal utilizó dependencias previamente descargad
 Permanece el aviso de API obsoleta en MetodosEnGeneral. No se ha cambiado código de producción ni corregido los defectos enumerados en BASELINE.md. El alcance de estas pruebas es una línea base, no una certificación de compras completas.
 
 Oracle, web, pagos, multitenancy y pruebas de concurrencia están pendientes de implementación. La matriz documenta criterios futuros, no resultados ya obtenidos.
+
+## Actualización H3 — compras Oracle
+
+La línea base anterior describe H0/H1. El estado posterior está en [H3-ORACLE.md](H3-ORACLE.md): 38 pruebas aprobadas, ocho contra Oracle real, y recorrido CLI de compra/reintento confirmado. El smoke de consola histórica volvió a pasar sin escribir datos. Web, reservas, importación completa y restauración siguen pendientes.

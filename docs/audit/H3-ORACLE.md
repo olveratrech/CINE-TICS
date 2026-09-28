@@ -1,6 +1,6 @@
 # H3 — Oracle local inicial
 
-Fecha: 2026-09-28. Infraestructura en ejecución; consola aún no conectada.
+Fecha: 2026-09-28. Infraestructura y consola de compras de demostración en ejecución.
 
 ## Implementado
 
@@ -27,10 +27,23 @@ Flyway 11.8.2 avisó inicialmente de versión Oracle no probada. Se actualizó a
 
 ## Pendiente
 
-Transacciones de compra, idempotencia, conexión del código de negocio, pools por cadena, autenticación/autorización de usuarios SaaS, importación conciliada y datos de prueba completos. Probar copia de seguridad/restauración; la persistencia tras reinicio no sustituye un respaldo.
+Integración de los demás flujos comerciales, pools por cadena, autenticación/autorización de usuarios SaaS, importación conciliada y datos de prueba completos. Probar copia de seguridad/restauración; la persistencia tras reinicio no sustituye un respaldo.
 
-No se ejecutó la aplicación de consola contra Oracle ni se cambió su persistencia TXT. No se modificaron los archivos históricos durante esta entrega. Los tests de integración Oracle son explícitos (`manage.py verify`), no forman parte todavía del workflow Java de GitHub.
+La consola histórica conserva su persistencia TXT. La nueva OracleConsole ejecuta compras ficticias contra Oracle. No se modificaron los archivos históricos durante esta entrega. Los tests de integración Oracle son explícitos (`manage.py verify`), no forman parte todavía del workflow Java de GitHub.
 
 ## Operación
 
 Ver [instrucciones y conexiones](../../infra/oracle/README.md). El contenedor queda encendido para el siguiente hito; puede detenerse con Compose sin eliminar el volumen.
+
+## Compras transaccionales — segundo corte
+
+- V002 aplicada y validada en ambas PDB: monederos demo, pedidos, líneas y pagos.
+- Puerto Compras y adaptador JDBC: precios obtenidos de Oracle; locks en orden de producto; descuento de inventario y saldo, pedido y pago confirmados juntos.
+- Clave única por cliente y huella de solicitud: reintento estable aunque cambien precios; contenido distinto con la misma clave se rechaza.
+- Fallos técnicos revierten la transacción. Rechazos comerciales conservan el resultado sin cargo.
+- 38 pruebas aprobadas: 30 unitarias/caracterización/consola histórica y ocho contra Oracle real. Cubren aprobación/reintento, saldo insuficiente, producto ausente, concurrencia por última unidad, duplicados concurrentes, fallo después del débito, aislamiento entre PDB y cuenta inactiva.
+- Prueba manual de CLI con clave demo-validacion-001: dos invocaciones, un pedido de 130.00 MXN, saldo final 870 y stock 8. Datos exclusivamente ficticios.
+- Se normalizaron importes recuperados a dos decimales. Los fixtures reutilizan una conexión para preparación y comprobaciones; cada compra sigue usando una conexión independiente. La primera ejecución produjo un ORA-12516 transitorio; la siguiente pasó al reducir la apertura de conexiones del fixture. No se cambiaron límites de Oracle ni recursos de Colima.
+- SQLPlus recibe NLS_LANG=.AL32UTF8 para preservar acentos del seed.
+
+No representa todavía una prueba de carga ni la migración completa de los requisitos. El workflow remoto sigue sin ejecutar Oracle; las pruebas de integración se activan explícitamente con manage.py test.

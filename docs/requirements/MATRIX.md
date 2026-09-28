@@ -434,7 +434,7 @@ Aceptación: Release ZIP con documentación, manuales, diagramas y demo sin dato
 
 Página: Usuario · Estado: **Parcial** · Prioridad: P0 · Hito: H3
 
-Evidencia: Oracle Docker ARM64, dos PDB, Flyway V001, aislamiento y reinicio verificados; falta integración y restauración.
+Evidencia: Oracle Docker ARM64, dos PDB, Flyway V001/V002, compras JDBC y concurrencia verificadas; falta integración completa y restauración.
 
 Aceptación: Dos cadenas aisladas, migraciones, volumen, reinicio y restauración.
 

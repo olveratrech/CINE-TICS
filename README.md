@@ -2,7 +2,7 @@
 
 Modernización de un proyecto académico de programación orientada a objetos: de consola y archivos locales a una aplicación web de gestión de cines con Oracle Multitenant.
 
-**Estado:** base histórica preservada; primera refactorización de carrito y autorización de compra implementada. Oracle local ya dispone de dos PDB y catálogo inicial; la consola aún usa archivos. La web y la integración comercial con Oracle siguen pendientes. La consola conserva defectos conocidos: no usarla para operaciones reales.
+**Estado:** base histórica preservada; primera refactorización de carrito y autorización de compra implementada. Oracle local dispone de dos PDB y una consola de demostración con compras transaccionales e idempotentes. La consola histórica aún usa archivos; la interfaz web sigue pendiente. La consola conserva defectos conocidos: no usarla para operaciones reales.
 
 ## Empezar
 
@@ -35,12 +35,25 @@ cd Cine
 ./mvnw compile exec:exec
 ```
 
-La prueba de arranque funciona sin datos históricos. Las funciones completas de la consola requieren los archivos locales originales dentro de `Cine`; esos archivos se excluyen de Git. Un clon nuevo puede compilar, ejecutar las pruebas y abrir/salir del menú, pero todavía no trae una demo comercial precargada. Los datos ficticios reproducibles se añadirán en la etapa de persistencia.
+La prueba de arranque funciona sin datos históricos. Las funciones completas de la consola requieren los archivos locales originales dentro de `Cine`; esos archivos se excluyen de Git. Un clon nuevo puede compilar, ejecutar las pruebas y abrir/salir del menú, La demo Oracle se prepara por separado con los comandos siguientes.
+
+## Probar compras con Oracle
+
+Después de preparar Oracle según [su guía](infra/oracle/README.md):
+
+```sh
+python3 infra/oracle/manage.py demo_seed
+python3 infra/oracle/console.py catalog
+python3 infra/oracle/console.py buy mi-compra-001 9001 2
+python3 infra/oracle/console.py history
+```
+
+Repetir la misma compra con la misma clave recupera el resultado sin cobrar otra vez. Esta consola usa una cuenta ficticia fija y no requiere datos históricos.
 
 ## Guía del proyecto
 
 - [Oracle local: arranque y conexiones](infra/oracle/README.md).
-- [Verificación de Oracle e integración pendiente](docs/audit/H3-ORACLE.md).
+- [Verificación de Oracle y compras](docs/audit/H3-ORACLE.md).
 - [Roadmap y criterios de salida](docs/ROADMAP.md).
 - [Matriz de requisitos](docs/requirements/MATRIX.md) y [CSV editable](docs/requirements/matrix.csv).
 - [Decisiones de producto](docs/requirements/DECISIONS.md).

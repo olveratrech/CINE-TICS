@@ -41,7 +41,7 @@ def sql(statement, tenant=None, role='APP'):
     script = ('set echo off verify off feedback off heading off pagesize 0 linesize 32767 trimspool on\n'
               'whenever oserror exit failure rollback\nwhenever sqlerror exit failure rollback\n'
               + login + '\n' + statement + '\nexit\n')
-    result = subprocess.run(COMPOSE + ['exec', '-T', 'oracle', 'sqlplus', '-s', '-L', '/nolog'],
+    result = subprocess.run(COMPOSE + ['exec', '-T', '-e', 'NLS_LANG=.AL32UTF8', 'oracle', 'sqlplus', '-s', '-L', '/nolog'],
                             input=script, text=True, capture_output=True, timeout=120)
     output = safe_output(result.stdout + result.stderr)
     if result.returncode or re.search(r'(ORA-|SP2-)\d+', output):
@@ -132,16 +132,39 @@ def verify():
     # Cross-PDB authentication: the first chain's application credentials must not work in the other PDB.
     wrong_password = credentials()['CINE_TICS_APP_PASSWORD']
     login = f'whenever sqlerror exit failure\nconnect CINE_APP/"{wrong_password}"@//localhost:1521/CADENA_DEMO\nexit\n'
-    result = subprocess.run(COMPOSE + ['exec', '-T', 'oracle', 'sqlplus', '-s', '-L', '/nolog'],
+    result = subprocess.run(COMPOSE + ['exec', '-T', '-e', 'NLS_LANG=.AL32UTF8', 'oracle', 'sqlplus', '-s', '-L', '/nolog'],
                             input=login, text=True, capture_output=True, timeout=30)
     if 'ORA-01017' not in result.stdout + result.stderr:
         raise RuntimeError('Expected cross-PDB invalid credentials rejection was not observed')
     print('Cross-chain credentials rejected: PASS', flush=True)
 
 
+def test():
+    env = os.environ.copy()
+    for tenant in TENANTS:
+        env[f'{tenant}_APP_PASSWORD'] = credentials()[f'{tenant}_APP_PASSWORD']
+    result = subprocess.run([str(ROOT/'Cine/mvnw'), '-B', '-ntp', '-f', str(ROOT/'Cine/pom.xml'),
+                             '-Poracle-it', 'verify'], env=env)
+    if result.returncode:
+        raise SystemExit(result.returncode)
+
+
+def demo_seed():
+    # Does not refill an existing wallet or stock: rerunning cannot erase purchase effects.
+    sql("""merge into demo_wallets w using (select 'DEMO' id from dual) s on (w.customer_id=s.id)
+        when not matched then insert(customer_id,balance,active) values ('DEMO',1000,1);
+        merge into products p using (select 9001 id from dual) s on (p.id=s.id)
+        when not matched then insert(id,code,name,price) values (9001,'DEMO_REFRESCO','Refresco de demostración',65);
+        merge into inventory i using (select 1 branch_id,9001 product_id from dual) s
+        on (i.branch_id=s.branch_id and i.product_id=s.product_id)
+        when not matched then insert(branch_id,product_id,quantity) values (1,9001,10);
+        commit;""", 'CINE_TICS', 'OWNER')
+    print('Synthetic wallet and product ready; existing balances and stock preserved')
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('action', choices=['secrets', 'provision', 'migrate', 'seed', 'verify', 'status'])
+    parser.add_argument('action', choices=['secrets', 'provision', 'migrate', 'seed', 'verify', 'status', 'test', 'demo_seed'])
     action = parser.parse_args().action
     if action == 'secrets':
         path = HERE / '.env'

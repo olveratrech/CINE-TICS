@@ -2,15 +2,19 @@
 
 Generado con `python3 scripts/audit_inventory.py`. No incluye contenido de archivos de datos.
 
-Fuentes Java: 36. Líneas: 4877.
+Fuentes Java: 40. Líneas: 5121.
 
 | Archivo | Líneas | Destino previsto |
 |---|---:|---|
 | `Administrador/Administrador.java` | 444 | Casos de uso administrativos |
 | `SIGA/ProcesamientoPedidos.java` | 16 | Pedidos y simulación |
+| `com/penta/cinetics/consola/OracleConsole.java` | 56 | Punto de entrada de consola |
 | `com/penta/cinetics/ventas/aplicacion/CompraSimulada.java` | 47 | Punto de entrada de consola |
+| `com/penta/cinetics/ventas/aplicacion/Compras.java` | 14 | Punto de entrada de consola |
+| `com/penta/cinetics/ventas/aplicacion/SolicitudCompra.java` | 43 | Punto de entrada de consola |
 | `com/penta/cinetics/ventas/dominio/CarritoProductos.java` | 58 | Punto de entrada de consola |
 | `com/penta/cinetics/ventas/dominio/LineaCarrito.java` | 27 | Punto de entrada de consola |
+| `com/penta/cinetics/ventas/infraestructura/ComprasOracle.java` | 131 | Punto de entrada de consola |
 | `com/penta/code/cine/AppCineTics.java` | 11 | Punto de entrada de consola |
 | `penta/code/cine/Funciones/BuscarPelicula.java` | 114 | Cartelera y casos de uso |
 | `penta/code/cine/Funciones/BuscarProducto.java` | 33 | Cartelera y casos de uso |
