@@ -2,19 +2,22 @@
 
 Generado con `python3 scripts/audit_inventory.py`. No incluye contenido de archivos de datos.
 
-Fuentes Java: 40. Líneas: 5121.
+Fuentes Java: 43. Líneas: 5379.
 
 | Archivo | Líneas | Destino previsto |
 |---|---:|---|
 | `Administrador/Administrador.java` | 444 | Casos de uso administrativos |
 | `SIGA/ProcesamientoPedidos.java` | 16 | Pedidos y simulación |
-| `com/penta/cinetics/consola/OracleConsole.java` | 56 | Punto de entrada de consola |
-| `com/penta/cinetics/ventas/aplicacion/CompraSimulada.java` | 47 | Punto de entrada de consola |
-| `com/penta/cinetics/ventas/aplicacion/Compras.java` | 14 | Punto de entrada de consola |
-| `com/penta/cinetics/ventas/aplicacion/SolicitudCompra.java` | 43 | Punto de entrada de consola |
-| `com/penta/cinetics/ventas/dominio/CarritoProductos.java` | 58 | Punto de entrada de consola |
-| `com/penta/cinetics/ventas/dominio/LineaCarrito.java` | 27 | Punto de entrada de consola |
-| `com/penta/cinetics/ventas/infraestructura/ComprasOracle.java` | 131 | Punto de entrada de consola |
+| `com/penta/cinetics/consola/OracleConsole.java` | 58 | Consola de demostración |
+| `com/penta/cinetics/consola/ReservasConsole.java` | 49 | Consola de demostración |
+| `com/penta/cinetics/reservas/aplicacion/Reservas.java` | 36 | Casos de uso y contratos |
+| `com/penta/cinetics/reservas/infraestructura/ReservasOracle.java` | 171 | Adaptadores de persistencia |
+| `com/penta/cinetics/ventas/aplicacion/CompraSimulada.java` | 47 | Casos de uso y contratos |
+| `com/penta/cinetics/ventas/aplicacion/Compras.java` | 14 | Casos de uso y contratos |
+| `com/penta/cinetics/ventas/aplicacion/SolicitudCompra.java` | 43 | Casos de uso y contratos |
+| `com/penta/cinetics/ventas/dominio/CarritoProductos.java` | 58 | Reglas de dominio |
+| `com/penta/cinetics/ventas/dominio/LineaCarrito.java` | 27 | Reglas de dominio |
+| `com/penta/cinetics/ventas/infraestructura/ComprasOracle.java` | 131 | Adaptadores de persistencia |
 | `com/penta/code/cine/AppCineTics.java` | 11 | Punto de entrada de consola |
 | `penta/code/cine/Funciones/BuscarPelicula.java` | 114 | Cartelera y casos de uso |
 | `penta/code/cine/Funciones/BuscarProducto.java` | 33 | Cartelera y casos de uso |

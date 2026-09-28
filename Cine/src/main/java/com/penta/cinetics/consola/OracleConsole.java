@@ -14,7 +14,9 @@ public final class OracleConsole {
         if (url == null || password == null) throw new IllegalStateException("Ejecuta mediante infra/oracle/console.py.");
         ComprasOracle.Conexion connections = () -> DriverManager.getConnection(url,"CINE_APP",password);
         String action = args.length == 0 ? "catalog" : args[0];
-        if (action.equals("buy")) {
+        if (java.util.Set.of("schedule-demo","shows","seats","hold","cancel-hold").contains(action)) {
+            ReservasConsole.ejecutar(args,connections::abrir);
+        } else if (action.equals("buy")) {
             if (args.length < 4 || args.length % 2 != 0) {
                 throw new IllegalArgumentException("Uso: buy clave producto cantidad [producto cantidad ...]");
             }
@@ -51,6 +53,6 @@ public final class OracleConsole {
                     while(r.next()) System.out.printf("%s | %s | %s | %s%n",r.getString(1),r.getString(2),r.getString(3),r.getString(4));
                 }
             }
-        } else throw new IllegalArgumentException("Comandos: catalog, buy, history.");
+        } else throw new IllegalArgumentException("Comandos: catalog, buy, history, schedule-demo, shows, seats, hold, cancel-hold.");
     }
 }

@@ -6,7 +6,7 @@ Fecha: 2026-09-28. Etapas pequeñas con evidencia; no se considera terminada una
 |---|---|---|---|
 | H0 Diagnóstico | Respaldo, inventario, matriz y decisiones | Trazabilidad de requisitos; decisiones abiertas identificadas | Entregado como diagnóstico inicial; flujos parciales requieren pruebas |
 | H1 Base | Git, Wrapper, convenciones, pruebas iniciales, workflow | Compilación limpia y arranque sin datos personales | Implementado localmente; CI remoto pendiente de repositorio remoto |
-| H2 Dominio comercial | Dinero, cantidades, orden de pago, reservas por función, lealtad acumulada | Regresiones de BUG-01 a BUG-07 y reglas separadas de consola | En curso: carrito y autorización previa corregidos; ver auditoría H2 |
+| H2 Dominio comercial | Dinero, cantidades, orden de pago, reservas por función, lealtad acumulada | Regresiones de BUG-01 a BUG-07 y reglas separadas de consola | En curso: carrito, autorización previa y reservas temporales Oracle; falta confirmación de boletos y lealtad |
 | H3 Oracle | Compose, PDB, esquema, migraciones, importador y seed ficticio | Dos cadenas aisladas, datos conciliados y recuperación verificada | En curso: Oracle local, catálogo y compras transaccionales verificados; importación y restauración pendientes |
 | H4 Compra web | Identidad, catálogo, reservas, carrito, pago demo y ticket | E2E visitante → registro → compra → historial; sin doble reserva | Pendiente |
 | H5 Operación | Inventario, empleados, lealtad completa, datos fiscales y reportes | Requisitos comerciales y administrativos verificados, permisos por rol | Pendiente |
@@ -35,4 +35,4 @@ Cada entrega debe contener código, prueba del criterio, documentación mínima 
 - Demo de pagos/facturación identificada como simulada.
 - Material académico y de portafolio trazado en R47–R53.
 
-Se adelantó la infraestructura de H3 a petición del propietario para implementar las garantías transaccionales pendientes de H2 directamente sobre Oracle. La consola histórica conserva persistencia TXT; existe una consola demo independiente de compras Oracle. El siguiente corte aborda funciones, asientos y reservas con vencimiento antes de la compra web.
+Se adelantó la infraestructura de H3 a petición del propietario para implementar las garantías transaccionales pendientes de H2 directamente sobre Oracle. La consola histórica conserva persistencia TXT; existe una consola demo independiente de compras Oracle. Funciones, asientos y reservas con vencimiento ya tienen adaptador Oracle y consola demo. El siguiente corte debe convertir una reserva vigente en boleto pagado de forma atómica, antes de la compra web.

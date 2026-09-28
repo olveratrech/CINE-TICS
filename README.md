@@ -2,7 +2,7 @@
 
 Modernización de un proyecto académico de programación orientada a objetos: de consola y archivos locales a una aplicación web de gestión de cines con Oracle Multitenant.
 
-**Estado:** base histórica preservada; primera refactorización de carrito y autorización de compra implementada. Oracle local dispone de dos PDB y una consola de demostración con compras transaccionales e idempotentes. La consola histórica aún usa archivos; la interfaz web sigue pendiente. La consola conserva defectos conocidos: no usarla para operaciones reales.
+**Estado:** base histórica preservada; primera refactorización de carrito y autorización de compra implementada. Oracle local dispone de dos PDB y una consola de demostración con compras transaccionales, funciones y reservas temporales. La consola histórica aún usa archivos; la interfaz web sigue pendiente. La consola conserva defectos conocidos: no usarla para operaciones reales.
 
 ## Empezar
 
@@ -35,7 +35,7 @@ cd Cine
 ./mvnw compile exec:exec
 ```
 
-La prueba de arranque funciona sin datos históricos. Las funciones completas de la consola requieren los archivos locales originales dentro de `Cine`; esos archivos se excluyen de Git. Un clon nuevo puede compilar, ejecutar las pruebas y abrir/salir del menú, La demo Oracle se prepara por separado con los comandos siguientes.
+La prueba de arranque funciona sin datos históricos. Las funciones completas de la consola requieren los archivos locales originales dentro de `Cine`; esos archivos se excluyen de Git. Un clon nuevo puede compilar, ejecutar las pruebas y abrir/salir del menú. La demo Oracle se prepara por separado con los comandos siguientes.
 
 ## Probar compras con Oracle
 
@@ -49,6 +49,8 @@ python3 infra/oracle/console.py history
 ```
 
 Repetir la misma compra con la misma clave recupera el resultado sin cobrar otra vez. Esta consola usa una cuenta ficticia fija y no requiere datos históricos.
+
+También puedes programar una función ficticia y reservar asientos: consulta los [comandos de reservas](infra/oracle/README.md#funciones-y-reservas-temporales). La reserva aún no se convierte en boleto pagado.
 
 ## Guía del proyecto
 

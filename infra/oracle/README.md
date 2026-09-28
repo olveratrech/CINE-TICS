@@ -82,11 +82,35 @@ python3 infra/oracle/manage.py test
 
 En una instalación nueva, el seed crea el monedero DEMO con 1000 MXN y diez unidades del producto 9001 a 65 MXN. No repone saldo ni stock al reejecutarse. La primera compra descuenta 130 MXN y dos unidades; la segunda devuelve el mismo pedido. Otra compra requiere otra clave. Reutilizar una clave con contenido distinto produce un error.
 
-Las ocho pruebas Oracle generan clientes/productos/sucursales ficticios exclusivos y los eliminan al finalizar. El perfil `oracle-it` ejecuta además las 30 pruebas existentes/unitarias. Una interrupción del proceso puede dejar fixtures con prefijo IT_; revisar sus identificadores antes de retirarlos. La ejecución habitual `./mvnw verify` no requiere Oracle.
+Las pruebas Oracle generan fixtures ficticias exclusivas y las eliminan al finalizar. El perfil `oracle-it` incluye las pruebas de compras y reservas, además de las pruebas que no necesitan base de datos. Una interrupción del proceso puede dejar fixtures con prefijo IT_; revisar sus identificadores antes de retirarlos. La ejecución habitual `./mvnw verify` no requiere Oracle.
 
-La consola demo fija cliente DEMO y sucursal CU; no implementa autenticación ni factura fiscal. Usa conexiones JDBC por operación. El backend web incorporará pools limitados por cadena y autorización antes de admitir usuarios concurrentes externos. Reservas de asientos, importación del legado, lealtad y facturación continúan pendientes.
+La consola demo fija cliente DEMO y sucursal CU; no implementa autenticación ni factura fiscal. Usa conexiones JDBC por operación. El backend web incorporará pools limitados por cadena y autorización antes de admitir usuarios concurrentes externos. Confirmación de boletos pagados, importación del legado, lealtad y facturación continúan pendientes.
 
 ## Referencias
 
 - Imagen oficial: https://container-registry.oracle.com/ (repositorio database/free).
 - Scripts y documentación de Oracle: https://github.com/oracle/docker-images/tree/main/OracleDatabase/SingleInstance
+
+## Funciones y reservas temporales
+
+Aplicar `manage.py migrate` para instalar V003 en ambas PDB y ejecutar `manage.py demo_seed` para añadir una sala ficticia de doce asientos. El seed conserva el saldo y stock existentes.
+
+Ejemplo con fecha explícita (elegir una fecha futura en formato AAAAMMDD):
+
+```sh
+python3 infra/oracle/console.py schedule-demo 20260929
+python3 infra/oracle/console.py shows
+python3 infra/oracle/console.py seats 20260929
+python3 infra/oracle/console.py hold mi-reserva-001 20260929 1 2
+python3 infra/oracle/console.py hold mi-reserva-001 20260929 2 1
+python3 infra/oracle/console.py cancel-hold mi-reserva-001
+python3 infra/oracle/console.py seats 20260929
+```
+
+`schedule-demo` crea la función a las 19:00–21:00 de America/Mexico_City; su ID es la fecha. Repetir una fecha existente produce un error y no la modifica. Los doce asientos son numerados del 1 al 12.
+
+Las reservas duran como máximo diez minutos y nunca superan el inicio de la función. Repetir la misma clave recupera el resultado sin renovar el tiempo. Una reserva vencida o cancelada requiere una nueva clave para reservar nuevamente. El vencimiento libera disponibilidad sin tareas programadas. Consultar asientos no garantiza disponibilidad posterior: reservar vuelve a comprobarla transaccionalmente.
+
+La reserva no genera un cargo ni un boleto. La compra de productos `buy` sigue siendo independiente. La conversión de reserva a boleto pagado es el siguiente corte.
+
+`manage.py test` ejecuta actualmente 50 pruebas: 32 sin Oracle y 18 de integración (ocho de compras y diez de reservas/programación). Véase [decisiones y límites de reservas](../../docs/architecture/ADR-002-RESERVAS.md).

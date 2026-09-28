@@ -158,6 +158,8 @@ def demo_seed():
         merge into inventory i using (select 1 branch_id,9001 product_id from dual) s
         on (i.branch_id=s.branch_id and i.product_id=s.product_id)
         when not matched then insert(branch_id,product_id,quantity) values (1,9001,10);
+        merge into auditoriums a using (select 9101 id from dual) s on (a.id=s.id)
+        when not matched then insert(id,branch_id,name,capacity) values (9101,1,'Sala de demostración',12);
         commit;""", 'CINE_TICS', 'OWNER')
     print('Synthetic wallet and product ready; existing balances and stock preserved')
 

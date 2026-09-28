@@ -18,7 +18,7 @@ Aceptación: Seed con cuatro sucursales y IDs únicos.
 
 Página: 1 · Estado: **Parcial** · Prioridad: P1 · Hito: H3
 
-Evidencia: Funciones/Funcion; archivos Funciones.
+Evidencia: Funciones/Funcion; Oracle V003 con programación y rechazo de solapamientos; falta seed académico.
 
 Aceptación: 20 funciones con fecha, sala y horario; detectar solapamientos.
 
@@ -26,7 +26,7 @@ Aceptación: 20 funciones con fecha, sala y horario; detectar solapamientos.
 
 Página: 2 · Estado: **Parcial** · Prioridad: P1 · Hito: H3
 
-Evidencia: CineTICS/Sala; registroSucursales.
+Evidencia: CineTICS/Sala; V003 con capacidad y asientos por función; falta seed de las 12 salas.
 
 Aceptación: Capacidades 120/150/200,100/160/175,80/100/150,90/125/140.
 

@@ -47,3 +47,14 @@ Ver [instrucciones y conexiones](../../infra/oracle/README.md). El contenedor qu
 - SQLPlus recibe NLS_LANG=.AL32UTF8 para preservar acentos del seed.
 
 No representa todavía una prueba de carga ni la migración completa de los requisitos. El workflow remoto sigue sin ejecutar Oracle; las pruebas de integración se activan explícitamente con manage.py test.
+
+## Reservas temporales — tercer corte
+
+- V003 aplicada y validada por Flyway en ambas PDB: salas, funciones, reservas y asientos por función.
+- Adaptador ReservasOracle y comandos de demo: schedule-demo, shows, seats, hold y cancel-hold.
+- 50 pruebas aprobadas: 32 sin Oracle, ocho de compras y diez de reservas/programación en Oracle real.
+- Escenarios nuevos: reserva completa/reintento sin extensión, vencimiento y reasignación, cancelación del propietario, dos clientes por un asiento, duplicados concurrentes, disponibilidad independiente por función, horarios contiguos y solapados, cuenta inactiva/función iniciada/asiento inexistente, rollback de escritura, aislamiento entre PDB y programación simultánea de horarios incompatibles.
+- Recorrido CLI: función ficticia 20260929 a las 19:00 de México; reserva de asientos 1 y 2, reintento con selección invertida, consulta, cancelación y consulta final. Ningún cargo generado.
+- Decisiones, garantías y límites: [ADR-002](../architecture/ADR-002-RESERVAS.md).
+
+La venta confirmada de boletos, el seed académico y la integración web siguen pendientes. El SQL administrativo puede eludir las validaciones del adaptador; aún no se expone programación a usuarios externos.

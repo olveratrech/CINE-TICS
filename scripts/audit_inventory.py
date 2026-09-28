@@ -21,6 +21,9 @@ for p in files:
     text = p.read_text()
     rel = p.relative_to(src).as_posix()
     destination = targets.get(p.parent.name, 'Punto de entrada de consola')
+    if 'com/penta/cinetics/' in rel:
+        destination = {'aplicacion': 'Casos de uso y contratos', 'dominio': 'Reglas de dominio',
+                       'infraestructura': 'Adaptadores de persistencia', 'consola': 'Consola de demostración'}.get(p.parent.name, destination)
     if p.name == 'MetodosEnGeneral.java':
         destination = 'Separar menús, compra, identidad y navegación'
     lines.append(f'| `{rel}` | {len(text.splitlines())} | {destination} |')

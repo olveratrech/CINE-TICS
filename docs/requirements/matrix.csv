@@ -1,7 +1,7 @@
 id,pagina,requisito,estado,evidencia,aceptacion,hito,prioridad
 R01,1,"Cuatro sucursales CU, Universidad, Delta, Xochimilco",Parcial,CineTICS/Sucursal; datos locales; seed Oracle con cuatro sucursales,Seed con cuatro sucursales y IDs únicos,H3,P1
-R02,1,Cinco funciones por sucursal y horarios del cuadro,Parcial,Funciones/Funcion; archivos Funciones,"20 funciones con fecha, sala y horario; detectar solapamientos",H3,P1
-R03,2,Capacidades de las 12 salas del cuadro,Parcial,CineTICS/Sala; registroSucursales,"Capacidades 120/150/200,100/160/175,80/100/150,90/125/140",H3,P1
+R02,1,Cinco funciones por sucursal y horarios del cuadro,Parcial,Funciones/Funcion; Oracle V003 con programación y rechazo de solapamientos; falta seed académico,"20 funciones con fecha, sala y horario; detectar solapamientos",H3,P1
+R03,2,Capacidades de las 12 salas del cuadro,Parcial,CineTICS/Sala; V003 con capacidad y asientos por función; falta seed de las 12 salas,"Capacidades 120/150/200,100/160/175,80/100/150,90/125/140",H3,P1
 R04,2,Registro de cliente y campos personales obligatorios,Parcial,Clientes/Cliente; Datos/RegistroClientes,"Validar nombre, apellidos, dirección, celular y correo; persistir",H4,P1
 R05,2,Contraseña de al menos ocho caracteres,Por verificar,Persona/Persona; Clientes/Cliente,Rechazar longitud menor; almacenar hash en versión nueva,H4,P0
 R06,2,Cartelera pública y compra con cuenta,Parcial,Funciones/MetodosEnGeneral,Visitante consulta; compra exige identidad autenticada,H4,P1

@@ -22,3 +22,7 @@ Oracle, web, pagos, multitenancy y pruebas de concurrencia están pendientes de 
 ## Actualización H3 — compras Oracle
 
 La línea base anterior describe H0/H1. El estado posterior está en [H3-ORACLE.md](H3-ORACLE.md): 38 pruebas aprobadas, ocho contra Oracle real, y recorrido CLI de compra/reintento confirmado. El smoke de consola histórica volvió a pasar sin escribir datos. Web, reservas, importación completa y restauración siguen pendientes.
+
+## Actualización H3 — reservas
+
+50 pruebas aprobadas, incluidas 18 en Oracle real. V003 validada en ambas PDB. Evidencia y límites en [H3-ORACLE.md](H3-ORACLE.md) y [ADR-002](../architecture/ADR-002-RESERVAS.md).
