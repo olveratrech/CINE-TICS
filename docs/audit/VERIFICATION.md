@@ -26,3 +26,7 @@ La línea base anterior describe H0/H1. El estado posterior está en [H3-ORACLE.
 ## Actualización H3 — reservas
 
 50 pruebas aprobadas, incluidas 18 en Oracle real. V003 validada en ambas PDB. Evidencia y límites en [H3-ORACLE.md](H3-ORACLE.md) y [ADR-002](../architecture/ADR-002-RESERVAS.md).
+
+## Actualización H3 — venta de boletos
+
+62 pruebas aprobadas (34 sin Oracle y 28 de integración). V004 aplicada y validada en ambas PDB; recorrido de reserva, pago, reintento e historial verificado desde la consola. Véase [H3-ORACLE.md](H3-ORACLE.md).

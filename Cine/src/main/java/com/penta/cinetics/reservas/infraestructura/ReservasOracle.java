@@ -17,7 +17,7 @@ public final class ReservasOracle implements Reservas {
     private final Conexion conexiones;
     public ReservasOracle(Conexion conexiones) { this.conexiones = conexiones; }
     private static final String HOLD_QUERY = "select id,screening_id,seat_selection,expires_at,"
-        + "case when cancelled=1 then 'CANCELADA' when expires_at<=systimestamp then 'VENCIDA' else 'ACTIVA' end "
+        + "case when exists (select 1 from CINE_OWNER.ticket_sales v where v.hold_id=seat_holds.id) then 'CONFIRMADA' when cancelled=1 then 'CANCELADA' when expires_at<=systimestamp then 'VENCIDA' else 'ACTIVA' end "
         + "from CINE_OWNER.seat_holds where customer_id=? and request_key=?";
 
     @FunctionalInterface private interface Trabajo<T> { T ejecutar(Connection c) throws SQLException; }
@@ -85,7 +85,7 @@ public final class ReservasOracle implements Reservas {
                 if (!r.next() || r.getInt(1)!=1) throw new Rechazo(Motivo.CUENTA_INACTIVA);
             }
             for (int seat : request.asientos()) {
-                try (var s = preparar(c,"select case when h.id is null or h.cancelled=1 or h.expires_at<=systimestamp "
+                try (var s = preparar(c,"select case when not exists (select 1 from CINE_OWNER.tickets t where t.screening_id=s.screening_id and t.seat_number=s.seat_number) and (h.id is null or h.cancelled=1 or h.expires_at<=systimestamp) "
                         + "then 1 else 0 end from CINE_OWNER.screening_seats s left join CINE_OWNER.seat_holds h on h.id=s.hold_id "
                         + "where s.screening_id=? and s.seat_number=?",request.funcion(),seat);
                      var r = s.executeQuery()) {
@@ -119,6 +119,10 @@ public final class ReservasOracle implements Reservas {
                 show = r.getLong(2);
             }
             bloquearFuncion(c,show);
+            try (var s = preparar(c,HOLD_QUERY,cliente,clave); var r = s.executeQuery()) {
+                if (!r.next()) throw new Rechazo(Motivo.NO_EXISTE);
+                if (Estado.CONFIRMADA.name().equals(r.getString(5))) throw new Rechazo(Motivo.RESERVA_CONFIRMADA);
+            }
             // Do not clear seat pointers: an expired hold may already have been replaced.
             ejecutar(c,"update CINE_OWNER.seat_holds set cancelled=1 where customer_id=? and request_key=? "
                 + "and cancelled=0 and expires_at>systimestamp",cliente,clave);
@@ -131,7 +135,7 @@ public final class ReservasOracle implements Reservas {
 
     @Override public List<Asiento> disponibilidad(long funcion) throws SQLException {
         try (Connection c = conexiones.abrir();
-             var s = preparar(c,"select s.seat_number,case when f.starts_at>systimestamp and "
+             var s = preparar(c,"select s.seat_number,case when f.starts_at>systimestamp and not exists (select 1 from CINE_OWNER.tickets t where t.screening_id=s.screening_id and t.seat_number=s.seat_number) and "
                 + "(h.id is null or h.cancelled=1 or h.expires_at<=systimestamp) then 1 else 0 end "
                 + "from CINE_OWNER.screening_seats s join CINE_OWNER.screenings f on f.id=s.screening_id "
                 + "left join CINE_OWNER.seat_holds h on h.id=s.hold_id where s.screening_id=? order by s.seat_number",funcion);

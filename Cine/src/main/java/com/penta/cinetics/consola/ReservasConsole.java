@@ -1,6 +1,8 @@
 package com.penta.cinetics.consola;
 
 import com.penta.cinetics.reservas.aplicacion.Reservas;
+import com.penta.cinetics.boletos.aplicacion.VentaBoletos;
+import com.penta.cinetics.boletos.infraestructura.BoletosOracle;
 import com.penta.cinetics.reservas.infraestructura.ReservasOracle;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -12,6 +14,20 @@ final class ReservasConsole {
     static void ejecutar(String[] args, ReservasOracle.Conexion connections) throws Exception {
         var service = new ReservasOracle(connections);
         switch (args[0]) {
+            case "pay-hold" -> {
+                if(args.length<4 || args.length%2!=0) throw new IllegalArgumentException("pay-hold clave asiento ADULTO|NINO [asiento ADULTO|NINO ...]");
+                var selection=new java.util.ArrayList<VentaBoletos.Seleccion>();
+                for(int i=2;i<args.length;i+=2) selection.add(new VentaBoletos.Seleccion(
+                    Integer.parseInt(args[i]),VentaBoletos.Tipo.valueOf(args[i+1])));
+                var sale=new BoletosOracle(connections::abrir).comprar(
+                    new VentaBoletos.Solicitud("DEMO",args[1],selection));
+                System.out.printf("Pago simulado: venta %s | MXN %s%s%n",sale.venta(),sale.total(),sale.repetida()?" | ya procesada, sin nuevo cargo":"");
+                for(var ticket:sale.boletos()) mostrarBoleto(ticket);
+            }
+            case "tickets" -> {
+                System.out.println("Boletos de demostración; no son comprobantes fiscales.");
+                for(var ticket:new BoletosOracle(connections::abrir).historial("DEMO")) mostrarBoleto(ticket);
+            }
             case "schedule-demo" -> {
                 if (args.length!=2) throw new IllegalArgumentException("schedule-demo AAAAMMDD");
                 var day = LocalDate.parse(args[1],DateTimeFormatter.BASIC_ISO_DATE);
@@ -42,8 +58,12 @@ final class ReservasConsole {
             default -> throw new IllegalArgumentException("Comando de reservas desconocido.");
         }
     }
+    private static void mostrarBoleto(VentaBoletos.Boleto ticket) {
+        System.out.printf("Boleto %s | función %d | asiento %d | %s | MXN %s%n",ticket.id(),ticket.funcion(),ticket.asiento(),ticket.tipo(),ticket.precio());
+    }
     private static void mostrar(Reservas.Resultado r) {
         System.out.printf("Reserva %s | %s | vence %s%s%n",r.id(),r.estado(),r.vence(),r.repetida()?" | solicitud ya procesada":"");
-        System.out.println("Reserva temporal: no es boleto ni genera un cobro.");
+        if(r.estado()!=Reservas.Estado.CONFIRMADA) System.out.println("Reserva temporal: no es boleto ni genera un cobro.");
+        else System.out.println("Reserva pagada. Consulta los boletos con tickets.");
     }
 }

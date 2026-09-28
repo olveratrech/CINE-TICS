@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 /** Holds are temporary, not tickets or payments. Bound to one chain by its adapter. */
 public interface Reservas {
-    enum Estado { ACTIVA, VENCIDA, CANCELADA }
+    enum Estado { ACTIVA, VENCIDA, CANCELADA, CONFIRMADA }
     record Solicitud(String cliente, long funcion, String clave, List<Integer> asientos) {
         public Solicitud {
             if (cliente == null || !cliente.matches("[A-Za-z0-9_-]{1,40}") || funcion <= 0
@@ -23,7 +23,7 @@ public interface Reservas {
     }
     record Resultado(String id, Estado estado, OffsetDateTime vence, boolean repetida) {}
     record Asiento(int numero, boolean disponible) {}
-    enum Motivo { NO_EXISTE, NO_DISPONIBLE, FUNCION_INICIADA, CUENTA_INACTIVA, CLAVE_REUTILIZADA, HORARIO_SOLAPADO }
+    enum Motivo { NO_EXISTE, NO_DISPONIBLE, FUNCION_INICIADA, CUENTA_INACTIVA, CLAVE_REUTILIZADA, HORARIO_SOLAPADO, RESERVA_CONFIRMADA }
     final class Rechazo extends RuntimeException {
         private final Motivo motivo;
         public Rechazo(Motivo motivo) { super(motivo.name()); this.motivo = motivo; }

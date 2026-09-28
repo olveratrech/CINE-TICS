@@ -7,7 +7,7 @@ R05,2,Contraseña de al menos ocho caracteres,Por verificar,Persona/Persona; Cli
 R06,2,Cartelera pública y compra con cuenta,Parcial,Funciones/MetodosEnGeneral,Visitante consulta; compra exige identidad autenticada,H4,P1
 R07,2,Método de pago asociado antes de comprar,Parcial,Financiera; ProcesoCompra,Token simulado asociado; no CVV persistente; sin cargo real,H4,P0
 R08,2,"Rob encuentra sucursal, sala y horario disponibles",Pendiente,rob/Rob vacío,Resultados de disponibilidad reales y elección de sucursal,H7,P1
-R09,2,Boleto adulto $80 y niño $50,Parcial,Sala.showFunciones; Boleto; LegacyRulesTest,Precios únicos en política de dominio y ticket consistente,H2,P1
+R09,2,Boleto adulto $80 y niño $50,Parcial,VentaBoletos.Tipo; V004 precio histórico; pruebas unitarias y BoletosOracleIT; legado conserva precios propios,Precios únicos en política de dominio y ticket consistente,H2,P1
 R10,2,Ficha completa de película,Parcial,Funciones/Pelicula (BUG-08),"Título, clasificación, director, duración, actores y sinopsis visibles",H4,P1
 R11,2,Inicio de sesión por ID de socio/empleado,Parcial,AutenticacionCliente; AutenticacionEmpleado,Ambos roles acceden por ID; permisos verificados en backend,H4,P0
 R12,2,Inscripción opcional a lealtad,Parcial,Cliente.unirseProgramaLealtad,Persistir inscripción y recuperar puntos al iniciar sesión,H5,P1

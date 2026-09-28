@@ -2,16 +2,18 @@
 
 Generado con `python3 scripts/audit_inventory.py`. No incluye contenido de archivos de datos.
 
-Fuentes Java: 43. Líneas: 5379.
+Fuentes Java: 45. Líneas: 5563.
 
 | Archivo | Líneas | Destino previsto |
 |---|---:|---|
 | `Administrador/Administrador.java` | 444 | Casos de uso administrativos |
 | `SIGA/ProcesamientoPedidos.java` | 16 | Pedidos y simulación |
+| `com/penta/cinetics/boletos/aplicacion/VentaBoletos.java` | 49 | Casos de uso y contratos |
+| `com/penta/cinetics/boletos/infraestructura/BoletosOracle.java` | 111 | Adaptadores de persistencia |
 | `com/penta/cinetics/consola/OracleConsole.java` | 58 | Consola de demostración |
-| `com/penta/cinetics/consola/ReservasConsole.java` | 49 | Consola de demostración |
+| `com/penta/cinetics/consola/ReservasConsole.java` | 69 | Consola de demostración |
 | `com/penta/cinetics/reservas/aplicacion/Reservas.java` | 36 | Casos de uso y contratos |
-| `com/penta/cinetics/reservas/infraestructura/ReservasOracle.java` | 171 | Adaptadores de persistencia |
+| `com/penta/cinetics/reservas/infraestructura/ReservasOracle.java` | 175 | Adaptadores de persistencia |
 | `com/penta/cinetics/ventas/aplicacion/CompraSimulada.java` | 47 | Casos de uso y contratos |
 | `com/penta/cinetics/ventas/aplicacion/Compras.java` | 14 | Casos de uso y contratos |
 | `com/penta/cinetics/ventas/aplicacion/SolicitudCompra.java` | 43 | Casos de uso y contratos |

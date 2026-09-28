@@ -26,3 +26,7 @@ La programación bloquea la sala antes de comprobar solapamientos; intervalos co
 Cliente DEMO y monederos ficticios como identidad provisional. El adaptador recibe identidad confiable; antes de exponer HTTP hace falta autenticación y derivar cliente/cadena desde la sesión, no desde datos manipulables de la petición. Cada adaptador se configura para una PDB.
 
 No se emiten boletos, no se cobra por reservar ni se convierte todavía una reserva en venta. El próximo corte debe confirmar reserva vigente, pago y boleto en una sola transacción; un asiento vendido ya no podrá liberarse por vencimiento. No se han implementado limpieza histórica, cambios de sala, cancelación de funciones, horarios académicos completos ni pools web.
+
+## Continuación implementada
+
+[ADR-003](ADR-003-VENTA-BOLETOS.md) implementa la confirmación de reserva con pago simulado y boletos. El estado CONFIRMADA y los boletos vendidos impiden liberar asientos por vencimiento. Los límites anteriores describen el corte V003 original.

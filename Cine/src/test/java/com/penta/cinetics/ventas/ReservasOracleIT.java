@@ -26,6 +26,9 @@ class ReservasOracleIT {
         }
         public void close() throws Exception {
             try {
+                f.execute("delete from CINE_OWNER.ticket_payments where sale_id in (select id from CINE_OWNER.ticket_sales where screening_id in (select id from CINE_OWNER.screenings where auditorium_id=?))",f.branch);
+                f.execute("delete from CINE_OWNER.tickets where screening_id in (select id from CINE_OWNER.screenings where auditorium_id=?)",f.branch);
+                f.execute("delete from CINE_OWNER.ticket_sales where screening_id in (select id from CINE_OWNER.screenings where auditorium_id=?)",f.branch);
                 f.execute("delete from CINE_OWNER.screening_seats where screening_id in (select id from CINE_OWNER.screenings where auditorium_id=?)",f.branch);
                 f.execute("delete from CINE_OWNER.seat_holds where screening_id in (select id from CINE_OWNER.screenings where auditorium_id=?)",f.branch);
                 f.execute("delete from CINE_OWNER.screenings where auditorium_id=?",f.branch);

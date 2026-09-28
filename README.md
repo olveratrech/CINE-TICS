@@ -50,7 +50,7 @@ python3 infra/oracle/console.py history
 
 Repetir la misma compra con la misma clave recupera el resultado sin cobrar otra vez. Esta consola usa una cuenta ficticia fija y no requiere datos históricos.
 
-También puedes programar una función ficticia y reservar asientos: consulta los [comandos de reservas](infra/oracle/README.md#funciones-y-reservas-temporales). La reserva aún no se convierte en boleto pagado.
+También puedes programar una función ficticia y reservar asientos: consulta los [comandos de reservas](infra/oracle/README.md#funciones-y-reservas-temporales). Puedes pagar la reserva con `pay-hold` y consultar los boletos emitidos con `tickets`; los pagos son simulados.
 
 ## Guía del proyecto
 

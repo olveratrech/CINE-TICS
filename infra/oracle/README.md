@@ -84,7 +84,7 @@ En una instalación nueva, el seed crea el monedero DEMO con 1000 MXN y diez uni
 
 Las pruebas Oracle generan fixtures ficticias exclusivas y las eliminan al finalizar. El perfil `oracle-it` incluye las pruebas de compras y reservas, además de las pruebas que no necesitan base de datos. Una interrupción del proceso puede dejar fixtures con prefijo IT_; revisar sus identificadores antes de retirarlos. La ejecución habitual `./mvnw verify` no requiere Oracle.
 
-La consola demo fija cliente DEMO y sucursal CU; no implementa autenticación ni factura fiscal. Usa conexiones JDBC por operación. El backend web incorporará pools limitados por cadena y autorización antes de admitir usuarios concurrentes externos. Confirmación de boletos pagados, importación del legado, lealtad y facturación continúan pendientes.
+La consola demo fija cliente DEMO y sucursal CU; no implementa autenticación ni factura fiscal. Usa conexiones JDBC por operación. El backend web incorporará pools limitados por cadena y autorización antes de admitir usuarios concurrentes externos. Compra combinada, importación del legado, lealtad y facturación continúan pendientes.
 
 ## Referencias
 
@@ -111,6 +111,25 @@ python3 infra/oracle/console.py seats 20260929
 
 Las reservas duran como máximo diez minutos y nunca superan el inicio de la función. Repetir la misma clave recupera el resultado sin renovar el tiempo. Una reserva vencida o cancelada requiere una nueva clave para reservar nuevamente. El vencimiento libera disponibilidad sin tareas programadas. Consultar asientos no garantiza disponibilidad posterior: reservar vuelve a comprobarla transaccionalmente.
 
-La reserva no genera un cargo ni un boleto. La compra de productos `buy` sigue siendo independiente. La conversión de reserva a boleto pagado es el siguiente corte.
+Reservar no genera un cargo. El comando `pay-hold` confirma el pago y emite boletos como se describe abajo. La compra de productos `buy` sigue siendo independiente.
 
-`manage.py test` ejecuta actualmente 50 pruebas: 32 sin Oracle y 18 de integración (ocho de compras y diez de reservas/programación). Véase [decisiones y límites de reservas](../../docs/architecture/ADR-002-RESERVAS.md).
+`manage.py test` ejecuta actualmente 62 pruebas: 34 sin Oracle y 28 de integración (ocho de compras, diez de reservas/programación y diez de boletos). Véase [decisiones y límites de reservas](../../docs/architecture/ADR-002-RESERVAS.md).
+
+
+## Pagar una reserva y consultar boletos
+
+Aplicar `manage.py migrate` para instalar V004 en ambas PDB. Usar una función futura existente y asientos disponibles. Ejemplo con una clave nueva:
+
+```sh
+python3 infra/oracle/console.py hold mi-compra-boletos-001 20260929 5 6
+python3 infra/oracle/console.py pay-hold mi-compra-boletos-001 5 ADULTO 6 NINO
+python3 infra/oracle/console.py pay-hold mi-compra-boletos-001 6 NINO 5 ADULTO
+python3 infra/oracle/console.py tickets
+python3 infra/oracle/console.py seats 20260929
+```
+
+Los precios son 80 MXN adulto y 50 MXN niño; solo se aceptan ADULTO/NINO. Incluir todos los asientos de la reserva. El segundo pago devuelve los mismos boletos sin cargo adicional, independientemente del orden de selección. Una tarifa distinta después del pago se rechaza.
+
+Los asientos pagados permanecen ocupados al vencer la reserva. `cancel-hold` no cancela boletos pagados ni devuelve dinero. Una reserva vencida/cancelada no puede pagarse; se necesita reservar otra vez con una clave nueva. Saldo insuficiente o cuenta inactiva no emiten boletos ni debitan saldo. Un error técnico permite reintentar con la misma reserva: si la operación anterior sí se confirmó, se recupera su resultado.
+
+V004 guarda ventas, pagos simulados y un UUID por boleto, con precio histórico y restricción única de asiento por función. El historial es exclusivamente de la cuenta ficticia DEMO. No incluye factura ni archivo de comprobante exportado. Véase [ADR-003](../../docs/architecture/ADR-003-VENTA-BOLETOS.md).

@@ -58,3 +58,13 @@ No representa todavía una prueba de carga ni la migración completa de los requ
 - Decisiones, garantías y límites: [ADR-002](../architecture/ADR-002-RESERVAS.md).
 
 La venta confirmada de boletos, el seed académico y la integración web siguen pendientes. El SQL administrativo puede eludir las validaciones del adaptador; aún no se expone programación a usuarios externos.
+
+## Venta de boletos — cuarto corte
+
+- V004 aplicada y validada en ambas PDB. Venta única por reserva; boleto único por función/asiento; referencias de venta a cliente y función de su reserva.
+- Nuevo contrato VentaBoletos y adaptador BoletosOracle: reserva vigente + monedero + pago simulado + boletos en una transacción.
+- Tarifas: adulto 80.00 MXN, niño 50.00 MXN; selección exacta de asientos; precios e identidad de boletos conservados para reintentos.
+- Reservas confirmadas ya no se cancelan por cancel-hold ni liberan asientos al vencer.
+- 62 pruebas aprobadas: 34 sin Oracle y 28 sobre Oracle real. Las diez nuevas de integración cubren emisión/reintento, propiedad y selección, vencimiento/cancelación, saldo/cuenta inactiva, pagos duplicados concurrentes, rollback tras débito, aislamiento PDB, pago contra cancelación simultáneos, saldo compartido entre funciones y vencimiento durante espera de monedero.
+- CLI verificada: boleto-validacion-001, función 20260929, asientos 3 adulto y 4 niño. Total 130.00; reintento devuelve misma venta y mismos dos UUID. Saldo ficticio pasa de 870 a 740 una sola vez. Historial recupera ambos boletos.
+- Detalles y límites: [ADR-003](../architecture/ADR-003-VENTA-BOLETOS.md). Pendientes: autenticación, API/web, compra combinada, lealtad y comprobantes exportados.

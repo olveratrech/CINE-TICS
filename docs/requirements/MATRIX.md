@@ -74,7 +74,7 @@ Aceptación: Resultados de disponibilidad reales y elección de sucursal.
 
 Página: 2 · Estado: **Parcial** · Prioridad: P1 · Hito: H2
 
-Evidencia: Sala.showFunciones; Boleto; LegacyRulesTest.
+Evidencia: VentaBoletos.Tipo; V004 precio histórico; pruebas unitarias y BoletosOracleIT; legado conserva precios propios.
 
 Aceptación: Precios únicos en política de dominio y ticket consistente.
 
