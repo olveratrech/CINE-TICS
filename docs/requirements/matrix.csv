@@ -2,14 +2,14 @@ id,pagina,requisito,estado,evidencia,aceptacion,hito,prioridad
 R01,1,"Cuatro sucursales CU, Universidad, Delta, Xochimilco",Parcial,CineTICS/Sucursal; datos locales; seed Oracle con cuatro sucursales,Seed con cuatro sucursales y IDs únicos,H3,P1
 R02,1,Cinco funciones por sucursal y horarios del cuadro,Parcial,Funciones/Funcion; Oracle V003 con programación y rechazo de solapamientos; falta seed académico,"20 funciones con fecha, sala y horario; detectar solapamientos",H3,P1
 R03,2,Capacidades de las 12 salas del cuadro,Parcial,CineTICS/Sala; V003 con capacidad y asientos por función; falta seed de las 12 salas,"Capacidades 120/150/200,100/160/175,80/100/150,90/125/140",H3,P1
-R04,2,Registro de cliente y campos personales obligatorios,Parcial,Clientes/Cliente; Datos/RegistroClientes,"Validar nombre, apellidos, dirección, celular y correo; persistir",H4,P1
-R05,2,Contraseña de al menos ocho caracteres,Por verificar,Persona/Persona; Clientes/Cliente,Rechazar longitud menor; almacenar hash en versión nueva,H4,P0
-R06,2,Cartelera pública y compra con cuenta,Parcial,Funciones/MetodosEnGeneral,Visitante consulta; compra exige identidad autenticada,H4,P1
+R04,2,Registro de cliente y campos personales obligatorios,Parcial,API RegistroCliente validado; V005; WebOracleIT; frontend pendiente,"Validar nombre, apellidos, dirección, celular y correo; persistir",H4,P1
+R05,2,Contraseña de al menos ocho caracteres,Parcial,API mínimo 8 y BCrypt coste 12 verificados; legado sin migrar,Rechazar longitud menor; almacenar hash en versión nueva,H4,P0
+R06,2,Cartelera pública y compra con cuenta,Parcial,API pública de funciones y compra con sesión verificada; frontend pendiente,Visitante consulta; compra exige identidad autenticada,H4,P1
 R07,2,Método de pago asociado antes de comprar,Parcial,Financiera; ProcesoCompra,Token simulado asociado; no CVV persistente; sin cargo real,H4,P0
 R08,2,"Rob encuentra sucursal, sala y horario disponibles",Pendiente,rob/Rob vacío,Resultados de disponibilidad reales y elección de sucursal,H7,P1
 R09,2,Boleto adulto $80 y niño $50,Parcial,VentaBoletos.Tipo; V004 precio histórico; pruebas unitarias y BoletosOracleIT; legado conserva precios propios,Precios únicos en política de dominio y ticket consistente,H2,P1
 R10,2,Ficha completa de película,Parcial,Funciones/Pelicula (BUG-08),"Título, clasificación, director, duración, actores y sinopsis visibles",H4,P1
-R11,2,Inicio de sesión por ID de socio/empleado,Parcial,AutenticacionCliente; AutenticacionEmpleado,Ambos roles acceden por ID; permisos verificados en backend,H4,P0
+R11,2,Inicio de sesión por ID de socio/empleado,Parcial,API login CADENA:ID con roles CLIENTE/EMPLEADO/ADMIN; WebOracleIT,Ambos roles acceden por ID; permisos verificados en backend,H4,P0
 R12,2,Inscripción opcional a lealtad,Parcial,Cliente.unirseProgramaLealtad,Persistir inscripción y recuperar puntos al iniciar sesión,H5,P1
 R13,2,"Porcentajes 3%, 7.5%, 15% y valor $0.0027 por punto",Parcial,ProgramaLealtad; LegacyRulesTest,Ejemplos de conversión y redondeo aprobados; saldo persistente,H5,P1
 R14,2,Ascensos 0→5→10→15,Parcial,ProgramaLealtad (BUG-06); D-02,"Metas acumuladas $1,000, $2,200, $3,550 con compras múltiples",H2,P1
@@ -52,10 +52,10 @@ R50,6,Manuales cliente y administrador,Pendiente,Sin manuales en copia de códig
 R51,6,Video técnico hasta veinte minutos y recursos,Histórico,Entregable externo al código; no inspeccionado,Guion y demo; grabación/publicación coordinadas con propietario,H8,P2
 R52,7,Presentación de empresa y exposición hasta doce minutos,Histórico,Entregable académico externo,Material de portafolio adaptado; no asumir entrega escolar vigente,H8,P2
 R53,6–7,"Paquete de entregables organizado, fuente y datos de prueba",Adaptado,Estructura documental nueva,"Release ZIP con documentación, manuales, diagramas y demo sin datos privados",H8,P2
-N01,Usuario,Oracle Multitenant en Docker,Parcial,"Oracle Docker ARM64, dos PDB, Flyway V001/V002, compras JDBC y concurrencia verificadas; falta integración completa y restauración","Dos cadenas aisladas, migraciones, volumen, reinicio y restauración",H3,P0
+N01,Usuario,Oracle Multitenant en Docker,Parcial,"Oracle Docker ARM64, dos PDB, Flyway V001–V005, compras JDBC y concurrencia verificadas; falta integración completa y restauración","Dos cadenas aisladas, migraciones, volumen, reinicio y restauración",H3,P0
 N02,Usuario,Interfaz web,Pendiente,ADR-001,Cliente y personal usan flujos sin consola; accesibilidad básica,H4,P1
 N03,Usuario,Refactorización y patrones justificados,En curso,Dominio de carrito y caso de uso CompraSimulada integrados a consola; H2 parcial,Reglas separadas de UI/persistencia y dependencias entre módulos controladas,H2,P1
 N04,Usuario,Eliminar elementos innecesarios sin perder capacidades,En curso,Inventario; respaldo,Eliminar solo tras mapa de uso y reemplazo probado,H2,P1
 R54,1,Rob asesora a empleados en entrega y gerentes en estadísticas,Pendiente,Rob vacío,Consultar pedidos y estadísticas reales según rol; no exponer datos de otra cadena,H7,P1
 R55,1,Alimentos antes y durante la función; Rob comunica pedidos a S.I.G.A.,Pendiente,ProcesamientoPedidos vacío,"Pedido con origen, función y estado; validación de horario y entrega antes/durante función",H6,P1
-R56,1,Software escalable para licenciar a otras cadenas como SaaS,Parcial,Dos PDB aisladas verificadas; falta identidad y autorización SaaS,"Dos cadenas configurables, aislamiento y alta reproducible; límites operativos documentados",H3,P1
+R56,1,Software escalable para licenciar a otras cadenas como SaaS,Parcial,Dos PDB y pools separados; identidad y autorización HTTP probadas; alta de cadenas manual,"Dos cadenas configurables, aislamiento y alta reproducible; límites operativos documentados",H3,P1

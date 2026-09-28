@@ -2,7 +2,7 @@
 
 Modernización de un proyecto académico de programación orientada a objetos: de consola y archivos locales a una aplicación web de gestión de cines con Oracle Multitenant.
 
-**Estado:** base histórica preservada; primera refactorización de carrito y autorización de compra implementada. Oracle local dispone de dos PDB y una consola de demostración con compras transaccionales, funciones y reservas temporales. La consola histórica aún usa archivos; la interfaz web sigue pendiente. La consola conserva defectos conocidos: no usarla para operaciones reales.
+**Estado:** base histórica preservada; primera refactorización de carrito y autorización de compra implementada. Oracle local dispone de dos PDB y una consola de demostración con compras transaccionales, funciones y reservas temporales. La API Spring Boot ya permite registro, sesiones, permisos y compra de boletos por HTTP. La consola histórica aún usa archivos; el frontend gráfico sigue pendiente. La consola conserva defectos conocidos: no usarla para operaciones reales.
 
 ## Empezar
 
@@ -52,8 +52,19 @@ Repetir la misma compra con la misma clave recupera el resultado sin cobrar otra
 
 También puedes programar una función ficticia y reservar asientos: consulta los [comandos de reservas](infra/oracle/README.md#funciones-y-reservas-temporales). Puedes pagar la reserva con `pay-hold` y consultar los boletos emitidos con `tickets`; los pagos son simulados.
 
+## API web local
+
+```sh
+python3 infra/oracle/manage.py migrate
+python3 infra/oracle/web.py serve
+```
+
+Abrir http://127.0.0.1:8080/api/public/CINE_TICS/shows para consultar la cartelera en JSON. El servidor corre en primer plano; Ctrl+C lo detiene. Registro, login y compras: [guía de la API](docs/api/README.md). No hay administrador ni contraseña predeterminados; el personal se provisiona con `web.py create-user`.
+
 ## Guía del proyecto
 
+- [API: endpoints, autenticación y arranque](docs/api/README.md).
+- [Verificación HTTP y permisos](docs/audit/H4-API.md).
 - [Oracle local: arranque y conexiones](infra/oracle/README.md).
 - [Verificación de Oracle y compras](docs/audit/H3-ORACLE.md).
 - [Roadmap y criterios de salida](docs/ROADMAP.md).

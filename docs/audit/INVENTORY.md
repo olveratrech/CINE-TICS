@@ -2,7 +2,7 @@
 
 Generado con `python3 scripts/audit_inventory.py`. No incluye contenido de archivos de datos.
 
-Fuentes Java: 45. Líneas: 5563.
+Fuentes Java: 56. Líneas: 5973.
 
 | Archivo | Líneas | Destino previsto |
 |---|---:|---|
@@ -12,6 +12,8 @@ Fuentes Java: 45. Líneas: 5563.
 | `com/penta/cinetics/boletos/infraestructura/BoletosOracle.java` | 111 | Adaptadores de persistencia |
 | `com/penta/cinetics/consola/OracleConsole.java` | 58 | Consola de demostración |
 | `com/penta/cinetics/consola/ReservasConsole.java` | 69 | Consola de demostración |
+| `com/penta/cinetics/identidad/IdentidadesOracle.java` | 54 | Punto de entrada de consola |
+| `com/penta/cinetics/identidad/RegistroCliente.java` | 13 | Punto de entrada de consola |
 | `com/penta/cinetics/reservas/aplicacion/Reservas.java` | 36 | Casos de uso y contratos |
 | `com/penta/cinetics/reservas/infraestructura/ReservasOracle.java` | 175 | Adaptadores de persistencia |
 | `com/penta/cinetics/ventas/aplicacion/CompraSimulada.java` | 47 | Casos de uso y contratos |
@@ -20,6 +22,15 @@ Fuentes Java: 45. Líneas: 5563.
 | `com/penta/cinetics/ventas/dominio/CarritoProductos.java` | 58 | Reglas de dominio |
 | `com/penta/cinetics/ventas/dominio/LineaCarrito.java` | 27 | Reglas de dominio |
 | `com/penta/cinetics/ventas/infraestructura/ComprasOracle.java` | 131 | Adaptadores de persistencia |
+| `com/penta/cinetics/web/ApiController.java` | 103 | Punto de entrada de consola |
+| `com/penta/cinetics/web/CineWebApplication.java` | 9 | Punto de entrada de consola |
+| `com/penta/cinetics/web/ConexionesPorCadena.java` | 36 | Punto de entrada de consola |
+| `com/penta/cinetics/web/ControlSesionFilter.java` | 46 | Punto de entrada de consola |
+| `com/penta/cinetics/web/ErroresApi.java` | 27 | Punto de entrada de consola |
+| `com/penta/cinetics/web/IdentidadSesion.java` | 14 | Punto de entrada de consola |
+| `com/penta/cinetics/web/LimiteAcceso.java` | 28 | Punto de entrada de consola |
+| `com/penta/cinetics/web/ProvisionarUsuario.java` | 24 | Punto de entrada de consola |
+| `com/penta/cinetics/web/SeguridadWeb.java` | 56 | Punto de entrada de consola |
 | `com/penta/code/cine/AppCineTics.java` | 11 | Punto de entrada de consola |
 | `penta/code/cine/Funciones/BuscarPelicula.java` | 114 | Cartelera y casos de uso |
 | `penta/code/cine/Funciones/BuscarProducto.java` | 33 | Cartelera y casos de uso |

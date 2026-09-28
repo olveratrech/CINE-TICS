@@ -34,15 +34,15 @@ Aceptación: Capacidades 120/150/200,100/160/175,80/100/150,90/125/140.
 
 Página: 2 · Estado: **Parcial** · Prioridad: P1 · Hito: H4
 
-Evidencia: Clientes/Cliente; Datos/RegistroClientes.
+Evidencia: API RegistroCliente validado; V005; WebOracleIT; frontend pendiente.
 
 Aceptación: Validar nombre, apellidos, dirección, celular y correo; persistir.
 
 ## R05 — Contraseña de al menos ocho caracteres
 
-Página: 2 · Estado: **Por verificar** · Prioridad: P0 · Hito: H4
+Página: 2 · Estado: **Parcial** · Prioridad: P0 · Hito: H4
 
-Evidencia: Persona/Persona; Clientes/Cliente.
+Evidencia: API mínimo 8 y BCrypt coste 12 verificados; legado sin migrar.
 
 Aceptación: Rechazar longitud menor; almacenar hash en versión nueva.
 
@@ -50,7 +50,7 @@ Aceptación: Rechazar longitud menor; almacenar hash en versión nueva.
 
 Página: 2 · Estado: **Parcial** · Prioridad: P1 · Hito: H4
 
-Evidencia: Funciones/MetodosEnGeneral.
+Evidencia: API pública de funciones y compra con sesión verificada; frontend pendiente.
 
 Aceptación: Visitante consulta; compra exige identidad autenticada.
 
@@ -90,7 +90,7 @@ Aceptación: Título, clasificación, director, duración, actores y sinopsis vi
 
 Página: 2 · Estado: **Parcial** · Prioridad: P0 · Hito: H4
 
-Evidencia: AutenticacionCliente; AutenticacionEmpleado.
+Evidencia: API login CADENA:ID con roles CLIENTE/EMPLEADO/ADMIN; WebOracleIT.
 
 Aceptación: Ambos roles acceden por ID; permisos verificados en backend.
 
@@ -434,7 +434,7 @@ Aceptación: Release ZIP con documentación, manuales, diagramas y demo sin dato
 
 Página: Usuario · Estado: **Parcial** · Prioridad: P0 · Hito: H3
 
-Evidencia: Oracle Docker ARM64, dos PDB, Flyway V001/V002, compras JDBC y concurrencia verificadas; falta integración completa y restauración.
+Evidencia: Oracle Docker ARM64, dos PDB, Flyway V001–V005, compras JDBC y concurrencia verificadas; falta integración completa y restauración.
 
 Aceptación: Dos cadenas aisladas, migraciones, volumen, reinicio y restauración.
 
@@ -482,6 +482,6 @@ Aceptación: Pedido con origen, función y estado; validación de horario y entr
 
 Página: 1 · Estado: **Parcial** · Prioridad: P1 · Hito: H3
 
-Evidencia: Dos PDB aisladas verificadas; falta identidad y autorización SaaS.
+Evidencia: Dos PDB y pools separados; identidad y autorización HTTP probadas; alta de cadenas manual.
 
 Aceptación: Dos cadenas configurables, aislamiento y alta reproducible; límites operativos documentados.

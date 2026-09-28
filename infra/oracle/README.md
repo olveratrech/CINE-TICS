@@ -46,7 +46,7 @@ No ejecutar el despliegue de migraciones en paralelo. Si hay un fallo DDL, deten
 
 ## Aislamiento y ciclo de vida
 
-Ambas PDB tienen los mismos nombres de esquema y claves de sucursal; el ID 1 identifica CU en una y Sucursal Demo en la otra. La verificación conecta con cada usuario local y comprueba nombre de PDB, datos distintos, rollback y credenciales de la otra cadena rechazadas. Esto verifica aislamiento de base de datos; la autorización SaaS de usuarios HTTP sigue pendiente.
+Ambas PDB tienen los mismos nombres de esquema y claves de sucursal; el ID 1 identifica CU en una y Sucursal Demo en la otra. La verificación conecta con cada usuario local y comprueba nombre de PDB, datos distintos, rollback y credenciales de la otra cadena rechazadas. Esto verifica aislamiento de base de datos; la API añade identidad por cadena y autorización HTTP, verificadas en WebOracleIT.
 
 Oracle mantiene su PDB predeterminada FREEPDB1 además de las dos PDB de aplicación. No se elimina ni se usa para almacenar datos del proyecto.
 
@@ -84,7 +84,7 @@ En una instalación nueva, el seed crea el monedero DEMO con 1000 MXN y diez uni
 
 Las pruebas Oracle generan fixtures ficticias exclusivas y las eliminan al finalizar. El perfil `oracle-it` incluye las pruebas de compras y reservas, además de las pruebas que no necesitan base de datos. Una interrupción del proceso puede dejar fixtures con prefijo IT_; revisar sus identificadores antes de retirarlos. La ejecución habitual `./mvnw verify` no requiere Oracle.
 
-La consola demo fija cliente DEMO y sucursal CU; no implementa autenticación ni factura fiscal. Usa conexiones JDBC por operación. El backend web incorporará pools limitados por cadena y autorización antes de admitir usuarios concurrentes externos. Compra combinada, importación del legado, lealtad y facturación continúan pendientes.
+La consola demo fija cliente DEMO y sucursal CU; no implementa autenticación ni factura fiscal. Usa conexiones JDBC por operación. La API web usa pools limitados por cadena y sesiones autenticadas; sigue ligada a localhost. Compra combinada, importación del legado, lealtad y facturación continúan pendientes.
 
 ## Referencias
 
@@ -113,12 +113,12 @@ Las reservas duran como máximo diez minutos y nunca superan el inicio de la fun
 
 Reservar no genera un cargo. El comando `pay-hold` confirma el pago y emite boletos como se describe abajo. La compra de productos `buy` sigue siendo independiente.
 
-`manage.py test` ejecuta actualmente 62 pruebas: 34 sin Oracle y 28 de integración (ocho de compras, diez de reservas/programación y diez de boletos). Véase [decisiones y límites de reservas](../../docs/architecture/ADR-002-RESERVAS.md).
+`manage.py test` ejecuta actualmente 71 pruebas: 36 sin Oracle y 35 de integración (incluidas siete HTTP con servidor real). Véase [decisiones y límites de reservas](../../docs/architecture/ADR-002-RESERVAS.md).
 
 
 ## Pagar una reserva y consultar boletos
 
-Aplicar `manage.py migrate` para instalar V004 en ambas PDB. Usar una función futura existente y asientos disponibles. Ejemplo con una clave nueva:
+Aplicar `manage.py migrate` para instalar las migraciones hasta V005 en ambas PDB. Usar una función futura existente y asientos disponibles. Ejemplo con una clave nueva:
 
 ```sh
 python3 infra/oracle/console.py hold mi-compra-boletos-001 20260929 5 6
@@ -133,3 +133,7 @@ Los precios son 80 MXN adulto y 50 MXN niño; solo se aceptan ADULTO/NINO. Inclu
 Los asientos pagados permanecen ocupados al vencer la reserva. `cancel-hold` no cancela boletos pagados ni devuelve dinero. Una reserva vencida/cancelada no puede pagarse; se necesita reservar otra vez con una clave nueva. Saldo insuficiente o cuenta inactiva no emiten boletos ni debitan saldo. Un error técnico permite reintentar con la misma reserva: si la operación anterior sí se confirmó, se recupera su resultado.
 
 V004 guarda ventas, pagos simulados y un UUID por boleto, con precio histórico y restricción única de asiento por función. El historial es exclusivamente de la cuenta ficticia DEMO. No incluye factura ni archivo de comprobante exportado. Véase [ADR-003](../../docs/architecture/ADR-003-VENTA-BOLETOS.md).
+
+## Identidad web y API
+
+V005 incorpora usuarios web por cadena con hash de contraseña y roles. La API usa conexiones CINE_APP del pool correspondiente a la identidad autenticada. Arranque: `python3 infra/oracle/web.py serve`. Registro, CSRF, login y endpoints: [guía de la API](../../docs/api/README.md). Las consolas demo siguen siendo herramientas locales con identidad DEMO fija.
