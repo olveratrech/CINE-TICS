@@ -2,7 +2,7 @@
 
 Modernización de un proyecto académico de programación orientada a objetos: de consola y archivos locales a una aplicación web de gestión de cines con Oracle Multitenant.
 
-**Estado:** base histórica preservada, diagnóstico inicial y herramientas de verificación. La web, Oracle y las integraciones todavía no están implementadas. La consola conserva defectos conocidos: no usarla para operaciones reales.
+**Estado:** base histórica preservada; primera refactorización de carrito y autorización de compra implementada. La web, Oracle y las integraciones todavía no están implementadas. La consola conserva defectos conocidos: no usarla para operaciones reales.
 
 ## Empezar
 
@@ -43,6 +43,7 @@ La prueba de arranque funciona sin datos históricos. Las funciones completas de
 - [Matriz de requisitos](docs/requirements/MATRIX.md) y [CSV editable](docs/requirements/matrix.csv).
 - [Decisiones de producto](docs/requirements/DECISIONS.md).
 - [Auditoría y defectos conocidos](docs/audit/BASELINE.md).
+- [Primera entrega comercial y límites pendientes](docs/audit/H2-COMMERCE.md).
 - [Resultados de verificación](docs/audit/VERIFICATION.md).
 - [Inventario de código](docs/audit/INVENTORY.md).
 - [Arquitectura objetivo](docs/architecture/ADR-001.md).

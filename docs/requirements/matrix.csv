@@ -17,8 +17,8 @@ R15,2,Regalo aleatorio cada $500 en nivel 15,Pendiente,ProgramaLealtad sin premi
 R16,3,Ver cartelera de sucursal seleccionada,Parcial,Funciones/VerCartelera,Selección se conserva y muestra funciones de esa sucursal,H4,P1
 R17,3,Buscar película y ampliar búsqueda a otras sucursales,Parcial,Funciones/BuscarPelicula,Proponer ampliación cuando no exista y cambiar al seleccionar resultado,H4,P1
 R18,3,Cambiar sucursal,Parcial,MetodosEnGeneral.obtenerSucursalPorSeleccion,Evitar mezclar carritos e inventario de distintas sucursales,H4,P1
-R19,3,Buscar productos y añadir cantidad al carrito,Parcial,Funciones/BuscarProducto; Dulceria/Carrito,Cantidad positiva; disponibilidad y total coherentes,H2,P0
-R20,3,"Ver, editar y comprar carrito",Parcial,Carrito; CarritoBoletos; ProcesoCompra,"Añadir, quitar, cambiar cantidad y comprar con total correcto",H4,P0
+R19,3,Buscar productos y añadir cantidad al carrito,Parcial,"Funciones/BuscarProducto; Dulceria/Carrito; H2 carrito/autorización con pruebas, flujo completo sigue parcial",Cantidad positiva; disponibilidad y total coherentes,H2,P0
+R20,3,"Ver, editar y comprar carrito",Parcial,"Carrito; CarritoBoletos; ProcesoCompra; H2 carrito/autorización con pruebas, flujo completo sigue parcial","Añadir, quitar, cambiar cantidad y comprar con total correcto",H4,P0
 R21,3,Actualizar datos personales,Parcial,Cliente.actualizarDatos; RegistroClientes,Solo dueño autenticado cambia datos válidos y persisten,H4,P1
 R22,3,Consultar compras propias,Parcial,Venta.verMisCompras; VentaBoletos.verMisCompras,Historial completo; no consultar compras de otro cliente,H4,P1
 R23,3,Consultar puntos propios,Parcial,Cliente; ProgramaLealtad,Saldo recuperado tras nueva sesión y aislado por usuario,H5,P1
@@ -26,11 +26,11 @@ R24,3,Ofrecer alimentos con boleto e identificador de consumo,Parcial,ProcesoCom
 R25,3,"Diez productos, códigos, precios y stock del cuadro",Por verificar,StockProductos local; Producto,Seed respeta tabla por sucursal; erratas resueltas (D-07),H3,P1
 R26,3,"Almacenamiento Productos, Clientes, Empleados, Gerentes y adicionales",Adaptado,Registros TXT → Oracle propuesto,Esquema y migración conservan entidades y relaciones; conciliación,H3,P0
 R27,4,Tickets con nombre Año_Mes_Día_IDTienda_IDTicket.txt,Parcial,Venta.generarTicket; VentaBoletos.generarTicket,"Exportación con nombre requerido, codificación y datos completos",H5,P2
-R28,4,Validar existencias antes de agregar al carrito,Parcial,Carrito.agregarProducto; LegacyRulesTest,"Rechazar falta, acumulación excesiva y stock agotado al confirmar",H2,P0
+R28,4,Validar existencias antes de agregar al carrito,Parcial,"Carrito.agregarProducto; LegacyRulesTest; H2 carrito/autorización con pruebas, flujo completo sigue parcial","Rechazar falta, acumulación excesiva y stock agotado al confirmar",H2,P0
 R29,4,"Solicitar factura, RFC, dirección fiscal y forma de pago",Pendiente,Sin flujo fiscal localizado; D-01,Solicitud y comprobante simulado; confirmar forma de pago,H5,P1
 R30,4,Campos de empleado/gerente y sucursal,Parcial,Personal; Persona; Datos/RegistroEmpleados,"Nombre, dirección, correo, teléfono, RFC, número, tipo y sucursal",H5,P1
-R31,4,Ticket virtual al finalizar pago,Parcial,Venta; VentaBoletos; BUG-02,"Ticket solo tras aprobación; fecha, ID, sucursal, detalle e importes",H4,P0
-R32,4,Eliminar producto y modificar unidades,Parcial,Carrito.eliminarProducto; no operación específica de cantidad,Modificar y eliminar recalcula sin alterar el stock del catálogo,H2,P1
+R31,4,Ticket virtual al finalizar pago,Parcial,"Venta; VentaBoletos; BUG-02; H2 carrito/autorización con pruebas, flujo completo sigue parcial","Ticket solo tras aprobación; fecha, ID, sucursal, detalle e importes",H4,P0
+R32,4,Eliminar producto y modificar unidades,Parcial,"Carrito.eliminarProducto; no operación específica de cantidad; H2 carrito/autorización con pruebas, flujo completo sigue parcial",Modificar y eliminar recalcula sin alterar el stock del catálogo,H2,P1
 R33,4,"24 usuarios: 3 clientes, 2 empleados, 1 gerente por sucursal",Por verificar,Archivos históricos no usados como fixtures,"Seed ficticio: 12 clientes, 8 empleados y 4 gerentes",H3,P1
 R34,4,"Acerca de con equipo, integrantes y contribuciones",Parcial,MetodosEnGeneral.menuGeneral,Pantalla con información y contribución de cada integrante,H8,P2
 R35,4,Alerta S.I.G.A. cuando stock menor a cinco,Pendiente,ProcesamientoPedidos vacío,Transición a 4 genera alerta; 5 no; alerta accesible al administrador,H6,P1
@@ -54,7 +54,7 @@ R52,7,Presentación de empresa y exposición hasta doce minutos,Histórico,Entre
 R53,6–7,"Paquete de entregables organizado, fuente y datos de prueba",Adaptado,Estructura documental nueva,"Release ZIP con documentación, manuales, diagramas y demo sin datos privados",H8,P2
 N01,Usuario,Oracle Multitenant en Docker,Pendiente,ADR-001,"Dos cadenas aisladas, migraciones, volumen, reinicio y restauración",H3,P0
 N02,Usuario,Interfaz web,Pendiente,ADR-001,Cliente y personal usan flujos sin consola; accesibilidad básica,H4,P1
-N03,Usuario,Refactorización y patrones justificados,En curso,"Git, convenciones y pruebas iniciales",Reglas separadas de UI/persistencia y dependencias entre módulos controladas,H2,P1
+N03,Usuario,Refactorización y patrones justificados,En curso,Dominio de carrito y caso de uso CompraSimulada integrados a consola; H2 parcial,Reglas separadas de UI/persistencia y dependencias entre módulos controladas,H2,P1
 N04,Usuario,Eliminar elementos innecesarios sin perder capacidades,En curso,Inventario; respaldo,Eliminar solo tras mapa de uso y reemplazo probado,H2,P1
 R54,1,Rob asesora a empleados en entrega y gerentes en estadísticas,Pendiente,Rob vacío,Consultar pedidos y estadísticas reales según rol; no exponer datos de otra cadena,H7,P1
 R55,1,Alimentos antes y durante la función; Rob comunica pedidos a S.I.G.A.,Pendiente,ProcesamientoPedidos vacío,"Pedido con origen, función y estado; validación de horario y entrega antes/durante función",H6,P1

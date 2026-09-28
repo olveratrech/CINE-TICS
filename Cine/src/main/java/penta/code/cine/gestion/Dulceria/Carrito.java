@@ -1,6 +1,7 @@
 package penta.code.cine.gestion.Dulceria;
 import java.io.*;
-import java.util.ArrayList;
+import com.penta.cinetics.ventas.dominio.CarritoProductos;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -8,34 +9,43 @@ import java.util.List;
  * @author olveratrech
  */
 public class Carrito {
-    protected List<Producto> carrito;
+    private final CarritoProductos contenido = new CarritoProductos();
 
-    public Carrito() {
-        this.carrito = new ArrayList<>();
-    }
-
-    public void agregarProducto(Producto producto, int cantidad/*, Dulceria dulceria, String sucursalActual*/) {
-        if (producto.getStock() >= cantidad) {
-            //producto.disminuirStock(cantidad);
-            //dulceria.actualizarStock(producto.getCodigo(), cantidad, sucursalActual);
-            carrito.add(new Producto(producto.getCodigo(), producto.getNombre(), producto.getPrecio(), producto.getCategoria(), cantidad));
+    public void agregarProducto(Producto producto, int cantidad) {
+        try {
+            contenido.agregar(producto.getCodigo(), producto.getNombre(), producto.getCategoria(),
+                    BigDecimal.valueOf(producto.getPrecio()), cantidad, producto.getStock());
             System.out.println("Se agregó " + producto.getNombre() + " al carrito.");
-        } else {
-            System.out.println("Stock insuficiente de " + producto.getNombre() + ", se ha levantado una alerta a adminstración del cine. ");
+        } catch (IllegalArgumentException | ArithmeticException error) {
+            System.out.println(error.getMessage());
         }
     }
 
+    public void cambiarCantidad(Producto producto, int cantidad) {
+        contenido.cambiarCantidad(producto.getCodigo(), cantidad, producto.getStock());
+    }
+
+    /** Compatibility snapshot for the legacy TXT writers; stock here means purchased units. */
+    public List<Producto> getProductos() {
+        return contenido.lineas().stream().map(linea -> new Producto(linea.codigo(), linea.nombre(),
+                linea.precioUnitario().doubleValue(), linea.categoria(), linea.cantidad())).toList();
+    }
+
+    public BigDecimal calcularTotalDecimal() {
+        return contenido.total();
+    }
+
     public void mostrarCarrito() {
-        if (carrito.isEmpty()) {
+        if (contenido.lineas().isEmpty()) {
             System.out.println("\nTu carrito está vacío. Agrega productos a tu carrito ;).");
         } else {
             System.out.println("Productos en tu carrito: ");
-            double total = 0;
+            BigDecimal total = calcularTotalDecimal();
             System.out.println(String.format("%-10s %-25s %-10s %-10s", "CANT", "DESCRIPCIÓN", "PRECIO", "IMPORTE"));
             
-            for (Producto producto : carrito) {
-            double importe = producto.getPrecio() * producto.getStock();
-            total += importe;
+            for (Producto producto : getProductos()) {
+                BigDecimal importe = BigDecimal.valueOf(producto.getPrecio())
+                        .multiply(BigDecimal.valueOf(producto.getStock()));
                 System.out.println((String.format("%-10d %-25s $%-9.2f $%-9.2f", 
                                        producto.getStock(), 
                                        producto.getNombre() + ", " + producto.getCategoria(), 
@@ -66,7 +76,7 @@ public class Carrito {
             writer.newLine();
             writer.write("-------------------------------");
             writer.newLine();
-            for (Producto producto : carrito) {
+            for (Producto producto : getProductos()) {
                 writer.write(producto.toString());
                 writer.newLine();
             }
@@ -77,14 +87,14 @@ public class Carrito {
     }
 
     public void eliminarProducto(String codigo) {
-        carrito.removeIf(producto -> producto.getCodigo().equals(codigo));
+        contenido.eliminar(codigo);
     }
     
     public double calcularTotal() {
-        return carrito.stream().mapToDouble(Producto::getPrecio).sum();
+        return calcularTotalDecimal().doubleValue();
     }
     
     public void limpiarCarrito() {
-        this.carrito.clear();
+        contenido.vaciar();
     }
 }

@@ -1,4 +1,6 @@
 package penta.code.cine.Funciones;
+import com.penta.cinetics.ventas.aplicacion.CompraSimulada;
+import java.math.BigDecimal;
 import Administrador.Administrador;
 import java.io.*;
 import java.sql.SQLOutput;
@@ -916,14 +918,10 @@ public class MetodosEnGeneral {
             String opcionMetodoPago = leeDato.nextLine();
             
             if (opcionMetodoPago.equalsIgnoreCase("1")) {
-                VentaBoletos ventaBoleto = new VentaBoletos();
-                ventaBoleto.registrarVenta(carritoBoletos, sucursal.getNombreSucursal(), cliente);
                 procesarPago(cliente, metodoPago, carritoBoletos, sucursal);
             } else {
                 metodoPago = registrarMetodoPago(cliente, sucursal.getNombreSucursal());
                 RegistroCuentaBancaria.registrarEnArchivo(cliente, metodoPago);
-                VentaBoletos ventaBoleto = new VentaBoletos();
-                ventaBoleto.registrarVenta(carritoBoletos, sucursal.getNombreSucursal(), cliente);
                 procesarPago(cliente, metodoPago, carritoBoletos, sucursal);
             }
         }
@@ -952,14 +950,10 @@ public class MetodosEnGeneral {
             String opcionMetodoPago = leeDato.nextLine();
             
             if (opcionMetodoPago.equalsIgnoreCase("1")) {
-                Venta venta = new Venta();
-                venta.registrarVenta(carritoProductos, sucursal.getNombreSucursal(), cliente);
                 procesarPagoProductos(cliente, metodoPago, carritoProductos, sucursal);
             } else {
                 metodoPago = registrarMetodoPago(cliente, sucursal.getNombreSucursal());
                 RegistroCuentaBancaria.registrarEnArchivo(cliente, metodoPago);
-                Venta venta = new Venta();
-                venta.registrarVenta(carritoProductos, sucursal.getNombreSucursal(), cliente);
                 procesarPagoProductos(cliente, metodoPago, carritoProductos, sucursal);
             }
         }
@@ -1009,23 +1003,22 @@ public class MetodosEnGeneral {
         }
         
         private static void procesarPago(Cliente cliente, CuentaBancaria metodoPago, CarritoBoletos carritoBoletos, Sucursal sucursal) throws IOException, InterruptedException {
-            double totalCompra = carritoBoletos.calcularTotal();
-            double saldoDisponible = metodoPago.getSaldo();
-
-            if (saldoDisponible >= totalCompra) {
-                System.out.print("\nPago exitoso, realizando la venta ");
-                for(int i = 0; i < 5; i++)
-                    Animacion();
-
-                carritoBoletos.limpiarCarrito();
-
-                metodoPago.setSaldo(saldoDisponible - totalCompra);
-
-                RegistroCuentaBancaria.registrarEnArchivo(cliente, metodoPago);
-
-                System.out.println("\n¡Compra realizada con éxito! El saldo restante en tu cuenta es: " + metodoPago.getSaldo());
+            CompraSimulada.Resultado resultado = new CompraSimulada().ejecutar(
+                    carritoBoletos.calcularTotalDecimal(), BigDecimal.valueOf(metodoPago.getSaldo()),
+                    metodoPago.getEstadoDeLaCuenta(), saldoRestante -> {
+                        new VentaBoletos().registrarVenta(carritoBoletos, sucursal.getNombreSucursal(), cliente);
+                        metodoPago.setSaldo(saldoRestante.doubleValue());
+                        RegistroCuentaBancaria.registrarEnArchivo(cliente, metodoPago);
+                        carritoBoletos.limpiarCarrito();
+                    });
+            if (resultado.aprobada()) {
+                System.out.println("Compra simulada aprobada. Saldo restante: " + resultado.saldoRestante());
             } else {
-                System.out.println("No tienes suficiente saldo para realizar la compra.");
+                System.out.println(switch (resultado.estado()) {
+                    case CUENTA_INACTIVA -> "La cuenta de pago está inactiva.";
+                    case SALDO_INSUFICIENTE -> "No tienes saldo suficiente para realizar la compra.";
+                    default -> "El importe o el saldo no es válido. Revisa el carrito y el método de pago.";
+                });
                 System.out.println("¿Deseas guardar el carrito para después o eliminarlo?");
                 System.out.println("1. Guardar carrito");
                 System.out.println("2. Eliminar carrito");
@@ -1041,22 +1034,22 @@ public class MetodosEnGeneral {
         }
         
         private static void procesarPagoProductos(Cliente cliente, CuentaBancaria metodoPago, Carrito carritoProductos, Sucursal sucursal) throws IOException, InterruptedException {
-            double totalCompra = carritoProductos.calcularTotal();
-            double saldoDisponible = metodoPago.getSaldo();
-
-            if (saldoDisponible >= totalCompra) {
-                System.out.print("\nPago exitoso, realizando la venta ");
-                for(int i = 0; i < 5; i++)
-                    Animacion();
-                carritoProductos.limpiarCarrito();
-
-                metodoPago.setSaldo(saldoDisponible - totalCompra);
-
-                RegistroCuentaBancaria.registrarEnArchivo(cliente, metodoPago);
-
-                System.out.println("\n¡Compra realizada con éxito! El saldo restante en tu cuenta es: " + metodoPago.getSaldo());
+            CompraSimulada.Resultado resultado = new CompraSimulada().ejecutar(
+                    carritoProductos.calcularTotalDecimal(), BigDecimal.valueOf(metodoPago.getSaldo()),
+                    metodoPago.getEstadoDeLaCuenta(), saldoRestante -> {
+                        new Venta().registrarVenta(carritoProductos, sucursal.getNombreSucursal(), cliente);
+                        metodoPago.setSaldo(saldoRestante.doubleValue());
+                        RegistroCuentaBancaria.registrarEnArchivo(cliente, metodoPago);
+                        carritoProductos.limpiarCarrito();
+                    });
+            if (resultado.aprobada()) {
+                System.out.println("Compra simulada aprobada. Saldo restante: " + resultado.saldoRestante());
             } else {
-                System.out.println("No tienes suficiente saldo para realizar la compra.");
+                System.out.println(switch (resultado.estado()) {
+                    case CUENTA_INACTIVA -> "La cuenta de pago está inactiva.";
+                    case SALDO_INSUFICIENTE -> "No tienes saldo suficiente para realizar la compra.";
+                    default -> "El importe o el saldo no es válido. Revisa el carrito y el método de pago.";
+                });
                 System.out.println("¿Deseas guardar el carrito para después o eliminarlo?");
                 System.out.println("1. Guardar carrito");
                 System.out.println("2. Eliminar carrito");

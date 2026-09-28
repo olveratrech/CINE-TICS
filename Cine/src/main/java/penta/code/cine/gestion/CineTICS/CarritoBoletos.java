@@ -79,7 +79,12 @@ public class CarritoBoletos {
     }
 
     public double calcularTotal() {
-        return boletos.stream().mapToDouble(Boleto::getPrecio).sum();
+        return calcularTotalDecimal().doubleValue();
+    }
+
+    public java.math.BigDecimal calcularTotalDecimal() {
+        return boletos.stream().map(b -> java.math.BigDecimal.valueOf(b.getPrecio()))
+                .reduce(new java.math.BigDecimal("0.00"), java.math.BigDecimal::add);
     }
 
     public void limpiarCarrito() {

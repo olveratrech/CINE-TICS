@@ -26,9 +26,7 @@ public class Venta {
         crearCarpeta(basePath + "VentasTotales/");
         crearCarpeta(basePath + "Tickets/");
         
-        double totalCompra = carrito.carrito.stream()
-                .mapToDouble(producto -> producto.getPrecio() * producto.getStock())
-                .sum();
+        double totalCompra = carrito.calcularTotal();
         
         if (cliente.isInscritoProgramaLealtad()) {
             cliente.getProgramaLealtad().agregarCompra(totalCompra);
@@ -49,7 +47,7 @@ public class Venta {
             writer.write(idTicket + "," + idCliente + "," + fecha + "," + sucursal + "," + totalCompra);
             writer.newLine();
 
-            for (Producto producto : carrito.carrito) {
+            for (Producto producto : carrito.getProductos()) {
                 writer.write(producto.toString());
                 writer.newLine();
             }
@@ -81,10 +79,10 @@ public class Venta {
             writer.write("---------------------------------------------------");
             writer.newLine();
 
-            double total = 0;
-            for (Producto producto : carrito.carrito) {
-                double importe = producto.getPrecio() * producto.getStock();
-                total += importe;
+            java.math.BigDecimal total = carrito.calcularTotalDecimal();
+            for (Producto producto : carrito.getProductos()) {
+                java.math.BigDecimal importe = java.math.BigDecimal.valueOf(producto.getPrecio())
+                        .multiply(java.math.BigDecimal.valueOf(producto.getStock()));
                 writer.write(String.format("%-10d %-25s $%-9.2f $%-9.2f", 
                                            producto.getStock(), 
                                            producto.getNombre() + ", " + producto.getCategoria(), 

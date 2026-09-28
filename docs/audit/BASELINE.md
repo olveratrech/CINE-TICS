@@ -2,6 +2,8 @@
 
 Referencia: `baseline-java25`, creada antes de cambios de modernización. La inspección es estática salvo donde se menciona una prueba. Ver `INVENTORY.md` para rutas exactas y tamaños.
 
+Actualización: [primera entrega H2](H2-COMMERCE.md) corrige cantidades y autorización previa. Las observaciones siguientes describen la versión de referencia, no el estado actualizado.
+
 ## Qué conservar y qué reemplazar
 
 | Área | Decisión | Motivo |

@@ -6,7 +6,7 @@ Fecha: 2026-09-28. Etapas pequeñas con evidencia; no se considera terminada una
 |---|---|---|---|
 | H0 Diagnóstico | Respaldo, inventario, matriz y decisiones | Trazabilidad de requisitos; decisiones abiertas identificadas | Entregado como diagnóstico inicial; flujos parciales requieren pruebas |
 | H1 Base | Git, Wrapper, convenciones, pruebas iniciales, workflow | Compilación limpia y arranque sin datos personales | Implementado localmente; CI remoto pendiente de repositorio remoto |
-| H2 Dominio comercial | Dinero, cantidades, orden de pago, reservas por función, lealtad acumulada | Regresiones de BUG-01 a BUG-07 y reglas separadas de consola | Siguiente |
+| H2 Dominio comercial | Dinero, cantidades, orden de pago, reservas por función, lealtad acumulada | Regresiones de BUG-01 a BUG-07 y reglas separadas de consola | En curso: carrito y autorización previa corregidos; ver auditoría H2 |
 | H3 Oracle | Compose, PDB, esquema, migraciones, importador y seed ficticio | Dos cadenas aisladas, datos conciliados y recuperación verificada | Pendiente |
 | H4 Compra web | Identidad, catálogo, reservas, carrito, pago demo y ticket | E2E visitante → registro → compra → historial; sin doble reserva | Pendiente |
 | H5 Operación | Inventario, empleados, lealtad completa, datos fiscales y reportes | Requisitos comerciales y administrativos verificados, permisos por rol | Pendiente |

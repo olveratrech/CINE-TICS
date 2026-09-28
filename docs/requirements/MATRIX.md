@@ -154,7 +154,7 @@ Aceptación: Evitar mezclar carritos e inventario de distintas sucursales.
 
 Página: 3 · Estado: **Parcial** · Prioridad: P0 · Hito: H2
 
-Evidencia: Funciones/BuscarProducto; Dulceria/Carrito.
+Evidencia: Funciones/BuscarProducto; Dulceria/Carrito; H2 carrito/autorización con pruebas, flujo completo sigue parcial.
 
 Aceptación: Cantidad positiva; disponibilidad y total coherentes.
 
@@ -162,7 +162,7 @@ Aceptación: Cantidad positiva; disponibilidad y total coherentes.
 
 Página: 3 · Estado: **Parcial** · Prioridad: P0 · Hito: H4
 
-Evidencia: Carrito; CarritoBoletos; ProcesoCompra.
+Evidencia: Carrito; CarritoBoletos; ProcesoCompra; H2 carrito/autorización con pruebas, flujo completo sigue parcial.
 
 Aceptación: Añadir, quitar, cambiar cantidad y comprar con total correcto.
 
@@ -226,7 +226,7 @@ Aceptación: Exportación con nombre requerido, codificación y datos completos.
 
 Página: 4 · Estado: **Parcial** · Prioridad: P0 · Hito: H2
 
-Evidencia: Carrito.agregarProducto; LegacyRulesTest.
+Evidencia: Carrito.agregarProducto; LegacyRulesTest; H2 carrito/autorización con pruebas, flujo completo sigue parcial.
 
 Aceptación: Rechazar falta, acumulación excesiva y stock agotado al confirmar.
 
@@ -250,7 +250,7 @@ Aceptación: Nombre, dirección, correo, teléfono, RFC, número, tipo y sucursa
 
 Página: 4 · Estado: **Parcial** · Prioridad: P0 · Hito: H4
 
-Evidencia: Venta; VentaBoletos; BUG-02.
+Evidencia: Venta; VentaBoletos; BUG-02; H2 carrito/autorización con pruebas, flujo completo sigue parcial.
 
 Aceptación: Ticket solo tras aprobación; fecha, ID, sucursal, detalle e importes.
 
@@ -258,7 +258,7 @@ Aceptación: Ticket solo tras aprobación; fecha, ID, sucursal, detalle e import
 
 Página: 4 · Estado: **Parcial** · Prioridad: P1 · Hito: H2
 
-Evidencia: Carrito.eliminarProducto; no operación específica de cantidad.
+Evidencia: Carrito.eliminarProducto; no operación específica de cantidad; H2 carrito/autorización con pruebas, flujo completo sigue parcial.
 
 Aceptación: Modificar y eliminar recalcula sin alterar el stock del catálogo.
 
@@ -450,7 +450,7 @@ Aceptación: Cliente y personal usan flujos sin consola; accesibilidad básica.
 
 Página: Usuario · Estado: **En curso** · Prioridad: P1 · Hito: H2
 
-Evidencia: Git, convenciones y pruebas iniciales.
+Evidencia: Dominio de carrito y caso de uso CompraSimulada integrados a consola; H2 parcial.
 
 Aceptación: Reglas separadas de UI/persistencia y dependencias entre módulos controladas.
 

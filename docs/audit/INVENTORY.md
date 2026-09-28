@@ -2,20 +2,23 @@
 
 Generado con `python3 scripts/audit_inventory.py`. No incluye contenido de archivos de datos.
 
-Fuentes Java: 33. Líneas: 4739.
+Fuentes Java: 36. Líneas: 4877.
 
 | Archivo | Líneas | Destino previsto |
 |---|---:|---|
 | `Administrador/Administrador.java` | 444 | Casos de uso administrativos |
 | `SIGA/ProcesamientoPedidos.java` | 16 | Pedidos y simulación |
+| `com/penta/cinetics/ventas/aplicacion/CompraSimulada.java` | 47 | Punto de entrada de consola |
+| `com/penta/cinetics/ventas/dominio/CarritoProductos.java` | 58 | Punto de entrada de consola |
+| `com/penta/cinetics/ventas/dominio/LineaCarrito.java` | 27 | Punto de entrada de consola |
 | `com/penta/code/cine/AppCineTics.java` | 11 | Punto de entrada de consola |
 | `penta/code/cine/Funciones/BuscarPelicula.java` | 114 | Cartelera y casos de uso |
 | `penta/code/cine/Funciones/BuscarProducto.java` | 33 | Cartelera y casos de uso |
-| `penta/code/cine/Funciones/MetodosEnGeneral.java` | 1074 | Separar menús, compra, identidad y navegación |
+| `penta/code/cine/Funciones/MetodosEnGeneral.java` | 1067 | Separar menús, compra, identidad y navegación |
 | `penta/code/cine/Funciones/VerCartelera.java` | 33 | Cartelera y casos de uso |
 | `penta/code/cine/gestion/CineTICS/Asiento.java` | 38 | Cartelera, reservas y ventas |
 | `penta/code/cine/gestion/CineTICS/Boleto.java` | 45 | Cartelera, reservas y ventas |
-| `penta/code/cine/gestion/CineTICS/CarritoBoletos.java` | 88 | Cartelera, reservas y ventas |
+| `penta/code/cine/gestion/CineTICS/CarritoBoletos.java` | 93 | Cartelera, reservas y ventas |
 | `penta/code/cine/gestion/CineTICS/Sala.java` | 130 | Cartelera, reservas y ventas |
 | `penta/code/cine/gestion/CineTICS/Sucursal.java` | 194 | Cartelera, reservas y ventas |
 | `penta/code/cine/gestion/CineTICS/VentaBoletos.java` | 202 | Cartelera, reservas y ventas |
@@ -23,10 +26,10 @@ Fuentes Java: 33. Líneas: 4739.
 | `penta/code/cine/gestion/Clientes/Cliente.java` | 243 | Identidad y perfiles |
 | `penta/code/cine/gestion/Datos/RegistroClientes.java` | 191 | Adaptadores e importador de legado |
 | `penta/code/cine/gestion/Datos/RegistroEmpleados.java` | 301 | Adaptadores e importador de legado |
-| `penta/code/cine/gestion/Dulceria/Carrito.java` | 90 | Inventario y ventas |
+| `penta/code/cine/gestion/Dulceria/Carrito.java` | 100 | Inventario y ventas |
 | `penta/code/cine/gestion/Dulceria/Dulceria.java` | 139 | Inventario y ventas |
 | `penta/code/cine/gestion/Dulceria/Producto.java` | 90 | Inventario y ventas |
-| `penta/code/cine/gestion/Dulceria/Venta.java` | 207 | Inventario y ventas |
+| `penta/code/cine/gestion/Dulceria/Venta.java` | 205 | Inventario y ventas |
 | `penta/code/cine/gestion/Financiera/CuentaBancaria.java` | 108 | Pago simulado; reemplazar almacenamiento sensible |
 | `penta/code/cine/gestion/Financiera/RegistroCuentaBancaria.java` | 62 | Pago simulado; reemplazar almacenamiento sensible |
 | `penta/code/cine/gestion/Funciones/Funcion.java` | 100 | Cartelera y casos de uso |
