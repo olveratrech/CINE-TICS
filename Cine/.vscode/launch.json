@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Cine-TICS (Java 25)",
+            "request": "launch",
+            "mainClass": "com.penta.code.cine.AppCineTics",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal"
+        }
+    ]
+}

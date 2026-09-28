@@ -1,0 +1,61 @@
+id,pagina,requisito,estado,evidencia,aceptacion,hito,prioridad
+R01,1,"Cuatro sucursales CU, Universidad, Delta, Xochimilco",Parcial,CineTICS/Sucursal; datos locales,Seed con cuatro sucursales y IDs únicos,H3,P1
+R02,1,Cinco funciones por sucursal y horarios del cuadro,Parcial,Funciones/Funcion; archivos Funciones,"20 funciones con fecha, sala y horario; detectar solapamientos",H3,P1
+R03,2,Capacidades de las 12 salas del cuadro,Parcial,CineTICS/Sala; registroSucursales,"Capacidades 120/150/200,100/160/175,80/100/150,90/125/140",H3,P1
+R04,2,Registro de cliente y campos personales obligatorios,Parcial,Clientes/Cliente; Datos/RegistroClientes,"Validar nombre, apellidos, dirección, celular y correo; persistir",H4,P1
+R05,2,Contraseña de al menos ocho caracteres,Por verificar,Persona/Persona; Clientes/Cliente,Rechazar longitud menor; almacenar hash en versión nueva,H4,P0
+R06,2,Cartelera pública y compra con cuenta,Parcial,Funciones/MetodosEnGeneral,Visitante consulta; compra exige identidad autenticada,H4,P1
+R07,2,Método de pago asociado antes de comprar,Parcial,Financiera; ProcesoCompra,Token simulado asociado; no CVV persistente; sin cargo real,H4,P0
+R08,2,"Rob encuentra sucursal, sala y horario disponibles",Pendiente,rob/Rob vacío,Resultados de disponibilidad reales y elección de sucursal,H7,P1
+R09,2,Boleto adulto $80 y niño $50,Parcial,Sala.showFunciones; Boleto; LegacyRulesTest,Precios únicos en política de dominio y ticket consistente,H2,P1
+R10,2,Ficha completa de película,Parcial,Funciones/Pelicula (BUG-08),"Título, clasificación, director, duración, actores y sinopsis visibles",H4,P1
+R11,2,Inicio de sesión por ID de socio/empleado,Parcial,AutenticacionCliente; AutenticacionEmpleado,Ambos roles acceden por ID; permisos verificados en backend,H4,P0
+R12,2,Inscripción opcional a lealtad,Parcial,Cliente.unirseProgramaLealtad,Persistir inscripción y recuperar puntos al iniciar sesión,H5,P1
+R13,2,"Porcentajes 3%, 7.5%, 15% y valor $0.0027 por punto",Parcial,ProgramaLealtad; LegacyRulesTest,Ejemplos de conversión y redondeo aprobados; saldo persistente,H5,P1
+R14,2,Ascensos 0→5→10→15,Parcial,ProgramaLealtad (BUG-06); D-02,"Metas acumuladas $1,000, $2,200, $3,550 con compras múltiples",H2,P1
+R15,2,Regalo aleatorio cada $500 en nivel 15,Pendiente,ProgramaLealtad sin premios,Un premio por tramo; stock y elegibilidad; sorteo reproducible en test,H5,P1
+R16,3,Ver cartelera de sucursal seleccionada,Parcial,Funciones/VerCartelera,Selección se conserva y muestra funciones de esa sucursal,H4,P1
+R17,3,Buscar película y ampliar búsqueda a otras sucursales,Parcial,Funciones/BuscarPelicula,Proponer ampliación cuando no exista y cambiar al seleccionar resultado,H4,P1
+R18,3,Cambiar sucursal,Parcial,MetodosEnGeneral.obtenerSucursalPorSeleccion,Evitar mezclar carritos e inventario de distintas sucursales,H4,P1
+R19,3,Buscar productos y añadir cantidad al carrito,Parcial,Funciones/BuscarProducto; Dulceria/Carrito,Cantidad positiva; disponibilidad y total coherentes,H2,P0
+R20,3,"Ver, editar y comprar carrito",Parcial,Carrito; CarritoBoletos; ProcesoCompra,"Añadir, quitar, cambiar cantidad y comprar con total correcto",H4,P0
+R21,3,Actualizar datos personales,Parcial,Cliente.actualizarDatos; RegistroClientes,Solo dueño autenticado cambia datos válidos y persisten,H4,P1
+R22,3,Consultar compras propias,Parcial,Venta.verMisCompras; VentaBoletos.verMisCompras,Historial completo; no consultar compras de otro cliente,H4,P1
+R23,3,Consultar puntos propios,Parcial,Cliente; ProgramaLealtad,Saldo recuperado tras nueva sesión y aislado por usuario,H5,P1
+R24,3,Ofrecer alimentos con boleto e identificador de consumo,Parcial,ProcesoCompra; carritos separados,Compra combinada y código de entrega único sin doble canje,H5,P1
+R25,3,"Diez productos, códigos, precios y stock del cuadro",Por verificar,StockProductos local; Producto,Seed respeta tabla por sucursal; erratas resueltas (D-07),H3,P1
+R26,3,"Almacenamiento Productos, Clientes, Empleados, Gerentes y adicionales",Adaptado,Registros TXT → Oracle propuesto,Esquema y migración conservan entidades y relaciones; conciliación,H3,P0
+R27,4,Tickets con nombre Año_Mes_Día_IDTienda_IDTicket.txt,Parcial,Venta.generarTicket; VentaBoletos.generarTicket,"Exportación con nombre requerido, codificación y datos completos",H5,P2
+R28,4,Validar existencias antes de agregar al carrito,Parcial,Carrito.agregarProducto; LegacyRulesTest,"Rechazar falta, acumulación excesiva y stock agotado al confirmar",H2,P0
+R29,4,"Solicitar factura, RFC, dirección fiscal y forma de pago",Pendiente,Sin flujo fiscal localizado; D-01,Solicitud y comprobante simulado; confirmar forma de pago,H5,P1
+R30,4,Campos de empleado/gerente y sucursal,Parcial,Personal; Persona; Datos/RegistroEmpleados,"Nombre, dirección, correo, teléfono, RFC, número, tipo y sucursal",H5,P1
+R31,4,Ticket virtual al finalizar pago,Parcial,Venta; VentaBoletos; BUG-02,"Ticket solo tras aprobación; fecha, ID, sucursal, detalle e importes",H4,P0
+R32,4,Eliminar producto y modificar unidades,Parcial,Carrito.eliminarProducto; no operación específica de cantidad,Modificar y eliminar recalcula sin alterar el stock del catálogo,H2,P1
+R33,4,"24 usuarios: 3 clientes, 2 empleados, 1 gerente por sucursal",Por verificar,Archivos históricos no usados como fixtures,"Seed ficticio: 12 clientes, 8 empleados y 4 gerentes",H3,P1
+R34,4,"Acerca de con equipo, integrantes y contribuciones",Parcial,MetodosEnGeneral.menuGeneral,Pantalla con información y contribución de cada integrante,H8,P2
+R35,4,Alerta S.I.G.A. cuando stock menor a cinco,Pendiente,ProcesamientoPedidos vacío,Transición a 4 genera alerta; 5 no; alerta accesible al administrador,H6,P1
+R36,5,Actualizar cartelera,Parcial,Administrador.ActualizarCartelera,Cambios válidos autorizados; horarios sin choque,H5,P1
+R37,5,"Ver productos, actualizar stock y agregar productos",Parcial,Administrador.VerProductos/ActualizarStockProducto/AgregarProducto,"Permisos, cantidades válidas, auditoría y persistencia",H5,P1
+R38,5,Ver empleados y agregar empleados,Parcial,VerEmpleados existe; AgregarEmpleados vacío,"Alta válida, ID único y visibilidad limitada a cadena/sucursal",H5,P1
+R39,5,"Estadísticas por sucursal, función, producto y total",Pendiente,Administrador.VerEstadisticasDeVentas vacío,Agregados coinciden con ventas confirmadas y filtros de tenant,H5,P1
+R40,5,"Reportes por sucursal, función, producto y total",Pendiente,Administrador.GenerarReporteDeVentas vacío,Exportación reproducible de resultados y periodo explícito,H5,P1
+R41,5,"Simular compra de alimentos, ingreso, inicio y fin de función",Pendiente,S.I.G.A. vacío; no orquestador localizado,Secuencia de estados y eventos determinista,H6,P1
+R42,5,Cinco cajas con identificador y cajero; precompras primero,Pendiente,Cajero tiene numCaja; sin planificador,Asignar cajas y procesar precompras antes de compras en sitio; D-06,H6,P1
+R43,5,Subtítulos durante diez segundos y fin de función,Pendiente,No implementación localizada,Duración observable de 10 s; reloj controlable en pruebas,H6,P2
+R44,5,"Bloquear inicio si falta mínimo 38 por producto, excepto peluche",Pendiente,No validación 38 localizada,"37 bloquea, 38 permite; reposición habilita; excluir peluche",H6,P1
+R45,5,Mostrar alertas generadas al finalizar simulación,Pendiente,Sin registro de alertas localizado,Historial de alertas consultable por administrador de la cadena,H6,P1
+R46,5,"Mostrar marca, sucursal y lema durante uso",Parcial,Menús y tickets,Encabezado web mantiene sucursal activa y marca en recorridos,H4,P2
+R47,6,"Documentación PDF con portada, índice e introducción",Por verificar,No entregable localizado en la copia de código,Documento de versión final generado y revisado visualmente,H8,P2
+R48,6,"UML, código, datos de prueba y descripción de archivos",Por verificar,No documentación original dentro del proyecto,"UML/ER/API, código versionado y fixtures ficticias documentados",H8,P2
+R49,6,"Descripción y capturas de simulación/pruebas, errores y conclusiones",Pendiente,Nueva documentación inicial únicamente,Evidencias reales y catálogo de errores; conclusiones de autoría humana,H8,P2
+R50,6,Manuales cliente y administrador,Pendiente,Sin manuales en copia de código,Recorridos documentados y reproducidos por otro usuario,H8,P2
+R51,6,Video técnico hasta veinte minutos y recursos,Histórico,Entregable externo al código; no inspeccionado,Guion y demo; grabación/publicación coordinadas con propietario,H8,P2
+R52,7,Presentación de empresa y exposición hasta doce minutos,Histórico,Entregable académico externo,Material de portafolio adaptado; no asumir entrega escolar vigente,H8,P2
+R53,6–7,"Paquete de entregables organizado, fuente y datos de prueba",Adaptado,Estructura documental nueva,"Release ZIP con documentación, manuales, diagramas y demo sin datos privados",H8,P2
+N01,Usuario,Oracle Multitenant en Docker,Pendiente,ADR-001,"Dos cadenas aisladas, migraciones, volumen, reinicio y restauración",H3,P0
+N02,Usuario,Interfaz web,Pendiente,ADR-001,Cliente y personal usan flujos sin consola; accesibilidad básica,H4,P1
+N03,Usuario,Refactorización y patrones justificados,En curso,"Git, convenciones y pruebas iniciales",Reglas separadas de UI/persistencia y dependencias entre módulos controladas,H2,P1
+N04,Usuario,Eliminar elementos innecesarios sin perder capacidades,En curso,Inventario; respaldo,Eliminar solo tras mapa de uso y reemplazo probado,H2,P1
+R54,1,Rob asesora a empleados en entrega y gerentes en estadísticas,Pendiente,Rob vacío,Consultar pedidos y estadísticas reales según rol; no exponer datos de otra cadena,H7,P1
+R55,1,Alimentos antes y durante la función; Rob comunica pedidos a S.I.G.A.,Pendiente,ProcesamientoPedidos vacío,"Pedido con origen, función y estado; validación de horario y entrega antes/durante función",H6,P1
+R56,1,Software escalable para licenciar a otras cadenas como SaaS,Pendiente,Sin modelo tenant; ADR-001,"Dos cadenas configurables, aislamiento y alta reproducible; límites operativos documentados",H3,P1

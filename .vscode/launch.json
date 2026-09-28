@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Cine-TICS — consola histórica",
+      "request": "launch",
+      "mainClass": "com.penta.code.cine.AppCineTics",
+      "cwd": "${workspaceFolder}/Cine",
+      "console": "integratedTerminal"
+    }
+  ]
+}
