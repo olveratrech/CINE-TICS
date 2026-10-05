@@ -1,102 +1,161 @@
 # CINE-TICS
 
-Modernización de un proyecto académico de programación orientada a objetos: de consola y archivos locales a una aplicación web de gestión de cines con Oracle Multitenant.
+CINE-TICS nació como un proyecto final de Programación Orientada a Objetos. La
+primera versión estaba hecha en Java, funcionaba desde consola y guardaba la
+información en archivos de texto. Después decidí retomarlo para corregir varios
+problemas de la versión original y convertirlo poco a poco en una aplicación
+web más completa.
 
-**Estado:** base histórica preservada; primera refactorización de carrito y autorización de compra implementada. Oracle local dispone de dos PDB y una consola de demostración con compras transaccionales, funciones y reservas temporales. La API Spring Boot ya permite registro, sesiones, permisos y compra de boletos por HTTP. La consola histórica aún usa archivos; la interfaz React de clientes ya permite reservar, pagar y consultar boletos. La consola conserva defectos conocidos: no usarla para operaciones reales.
+Actualmente el proyecto conserva la consola original como referencia, pero
+también cuenta con una interfaz web para clientes, una API en Spring Boot y una
+base de datos Oracle ejecutándose en Docker.
 
-## Empezar
+## ¿Qué se puede hacer?
 
-Requisitos: JDK 25, Python 3 para la prueba de arranque y acceso a Internet en la primera compilación. Maven Wrapper descarga Maven 3.9.16; no hace falta instalar Maven por separado.
+Desde la página web un usuario puede:
 
-```sh
-cd Cine
-./mvnw -B -ntp clean verify
-cd ..
-python3 scripts/smoke_console.py
+- Consultar las funciones disponibles de cada cadena de cine.
+- Registrarse e iniciar sesión con su ID de socio.
+- Consultar los asientos de una función.
+- Reservar hasta diez asientos durante diez minutos.
+- Elegir tarifa de adulto o niño.
+- Realizar un pago de demostración.
+- Consultar los boletos que ha comprado.
+
+También existen operaciones de API para compras de productos, consulta de
+ventas por empleados y programación de funciones por administradores.
+
+Los pagos y saldos son simulados. El proyecto no realiza cobros reales.
+
+## Tecnologías utilizadas
+
+- Java 25
+- Spring Boot 4.1.1
+- Spring Security
+- Maven
+- React y TypeScript
+- Vite y Vitest
+- Oracle Database Free
+- Flyway para las migraciones de la base de datos
+- Docker Compose
+- JUnit 5
+
+## Organización del proyecto
+
+```text
+Cine/                   Código Java, consola original, API y pruebas
+frontend/               Interfaz web hecha con React
+infra/oracle/           Docker, migraciones y herramientas para Oracle
+docs/                   Requisitos, decisiones y notas de desarrollo
+scripts/                Scripts de apoyo y comprobación
+.github/workflows/      Configuración de pruebas para GitHub Actions
 ```
 
-En Windows usar `mvnw.cmd`. Comprobar `java -version` y `./mvnw -version`: ambos deben utilizar Java 25.
+La base de datos utiliza dos PDB para representar dos cadenas independientes:
+`CINE_TICS` y `CADENA_DEMO`. Los usuarios, reservas, ventas y boletos de una
+cadena permanecen separados de los de la otra.
 
-En este Mac, si una terminal antigua sigue usando otro JDK:
+## Requisitos para ejecutarlo
+
+- JDK 25
+- Python 3
+- Node.js 22.12 o posterior
+- Docker y Docker Compose
+
+El proyecto incluye Maven Wrapper, por lo que no es necesario instalar Maven
+por separado.
+
+Para revisar las versiones instaladas:
+
+```sh
+java -version
+node --version
+docker --version
+```
+
+En este Mac, si la terminal todavía utiliza otro JDK, se puede seleccionar Java
+25 con:
 
 ```sh
 export JAVA_HOME=/opt/homebrew/opt/openjdk@25/libexec/openjdk.jdk/Contents/Home
 export PATH="$JAVA_HOME/bin:$PATH"
 ```
 
-## Ejecutar la consola existente
+## Preparar Oracle por primera vez
 
-Abrir **la carpeta raíz CINE-TICS** en VS Code y elegir `Cine-TICS — consola histórica` con F5. La configuración fija el directorio de trabajo en `Cine`.
+Desde la carpeta raíz del proyecto:
 
-También se puede ejecutar desde terminal:
+```sh
+python3 infra/oracle/manage.py secrets
+docker compose -f infra/oracle/compose.yaml up -d
+python3 infra/oracle/manage.py status
+python3 infra/oracle/manage.py provision
+python3 infra/oracle/manage.py migrate
+python3 infra/oracle/manage.py seed
+python3 infra/oracle/manage.py demo_seed
+```
+
+El primer arranque de Oracle puede tardar varios minutos. El comando `status`
+permite comprobar cuándo el contenedor ya está listo.
+
+## Ejecutar la aplicación web
+
+Con Oracle iniciado:
+
+```sh
+python3 infra/oracle/web.py serve
+```
+
+Después se puede abrir:
+
+<http://127.0.0.1:8080/web/index.html>
+
+Este comando compila el frontend, lo incluye dentro de la aplicación Spring
+Boot e inicia el servidor. Para detenerlo se utiliza `Ctrl+C`; la base de datos
+permanece encendida.
+
+## Ejecutar la consola original
+
+La consola que formaba parte del proyecto académico todavía se puede ejecutar
+desde VS Code con la configuración `CINE-TICS — consola histórica`, o desde la
+terminal:
 
 ```sh
 cd Cine
 ./mvnw compile exec:exec
 ```
 
-La prueba de arranque funciona sin datos históricos. Las funciones completas de la consola requieren los archivos locales originales dentro de `Cine`; esos archivos se excluyen de Git. Un clon nuevo puede compilar, ejecutar las pruebas y abrir/salir del menú. La demo Oracle se prepara por separado con los comandos siguientes.
+En Windows se utiliza `mvnw.cmd`.
 
-## Probar compras con Oracle
+## Ejecutar las pruebas
 
-Después de preparar Oracle según [su guía](infra/oracle/README.md):
-
-```sh
-python3 infra/oracle/manage.py demo_seed
-python3 infra/oracle/console.py catalog
-python3 infra/oracle/console.py buy mi-compra-001 9001 2
-python3 infra/oracle/console.py history
-```
-
-Repetir la misma compra con la misma clave recupera el resultado sin cobrar otra vez. Esta consola usa una cuenta ficticia fija y no requiere datos históricos.
-
-También puedes programar una función ficticia y reservar asientos: consulta los [comandos de reservas](infra/oracle/README.md#funciones-y-reservas-temporales). Puedes pagar la reserva con `pay-hold` y consultar los boletos emitidos con `tickets`; los pagos son simulados.
-
-## API web local
+Las pruebas que no necesitan Oracle se ejecutan con:
 
 ```sh
-python3 infra/oracle/manage.py migrate
-python3 infra/oracle/web.py serve
+cd Cine
+./mvnw -B -ntp clean verify
 ```
 
-Abrir **http://127.0.0.1:8080/web/index.html** para usar la interfaz. También se conserva la cartelera JSON en `/api/public/CINE_TICS/shows`. El servidor corre en primer plano; Ctrl+C lo detiene. Registro, login y compras: [guía de la API](docs/api/README.md). No hay administrador ni contraseña predeterminados; el personal se provisiona con `web.py create-user`.
+Para ejecutar también las pruebas de React y las pruebas de integración con
+Oracle:
 
-## Guía del proyecto
-
-- [Interfaz React: uso, desarrollo y pruebas](frontend/README.md).
-- [Verificación visual](docs/audit/H4-REACT.md).
-- [API: endpoints, autenticación y arranque](docs/api/README.md).
-- [Verificación HTTP y permisos](docs/audit/H4-API.md).
-- [Oracle local: arranque y conexiones](infra/oracle/README.md).
-- [Verificación de Oracle y compras](docs/audit/H3-ORACLE.md).
-- [Roadmap y criterios de salida](docs/ROADMAP.md).
-- [Matriz de requisitos](docs/requirements/MATRIX.md) y [CSV editable](docs/requirements/matrix.csv).
-- [Decisiones de producto](docs/requirements/DECISIONS.md).
-- [Auditoría y defectos conocidos](docs/audit/BASELINE.md).
-- [Primera entrega comercial y límites pendientes](docs/audit/H2-COMMERCE.md).
-- [Resultados de verificación](docs/audit/VERIFICATION.md).
-- [Inventario de código](docs/audit/INVENTORY.md).
-- [Arquitectura objetivo](docs/architecture/ADR-001.md).
-- [Convenciones y proceso de cambios](CONTRIBUTING.md).
-- [Preservación y recuperación](docs/RECOVERY.md).
-
-## Estructura actual
-
-```text
-Cine/                   Aplicación de consola y Maven Wrapper
-  src/main/java/        Código histórico preservado
-  src/test/java/        Pruebas de caracterización
-  .mvn/                 Versión de Maven fijada
-docs/                   Requisitos, auditoría, decisiones y roadmap
-scripts/                Verificación e inventario
-.github/workflows/      Verificación propuesta para GitHub Actions
-.local-backups/         Respaldo privado, excluido de Git
+```sh
+python3 infra/oracle/manage.py test
 ```
 
-`infra/oracle` contiene Compose, migraciones y verificación. Los directorios futuros `backend` y `frontend` se crearán al implementar sus componentes. No son funcionalidades disponibles todavía.
+Estas pruebas revisan, entre otras cosas, el registro e inicio de sesión, los
+permisos, las reservas, los pagos, los reintentos, el aislamiento entre cadenas
+y la compra simultánea de asientos.
 
-## Verificación y límites
+## Documentación adicional
 
-Las pruebas actuales cubren reglas puntuales de la consola. No prueban aislamiento multitenant, pagos, compras completas ni concurrencia. El workflow local está preparado para GitHub, pero no hay remoto ni ejecución de CI en la nube todavía.
+- [Uso de la interfaz web](frontend/README.md)
+- [Configuración de Oracle](infra/oracle/README.md)
+- [Endpoints de la API](docs/api/README.md)
+- [Roadmap del proyecto](docs/ROADMAP.md)
+- [Matriz de requisitos](docs/requirements/MATRIX.md)
+- [Decisiones de arquitectura](docs/architecture/ADR-001.md)
 
-Nunca incorporar datos personales históricos, tarjetas, contraseñas, respaldos o `.env` al repositorio. La primera versión nueva utilizará pagos y facturación simulados, elegidos por el propietario del proyecto.
+Los archivos `.env`, respaldos, datos históricos de clientes y archivos
+generados durante la compilación están excluidos del repositorio. Las
+credenciales y los datos personales no deben agregarse a GitHub.
